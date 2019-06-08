@@ -152,8 +152,8 @@ class ViewController: NSViewController {
             return
         }
         //midiFilePlayer.instrument = "AUMIDISynth"
-        midiFilePlayer.instrument = "Kontakt"
-        midiFilePlayer.midiFile   = "Documents/out.mid"
+        midiFilePlayer.instrument = "AUMIDISynth"
+        midiFilePlayer.midiFile   = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.play()
     }
     
