@@ -732,16 +732,214 @@
                                     <action selector="openPluginWindow:" target="XfG-lQ-9wD" id="kG0-xa-7MN"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DMb-d1-HuP">
+                                <rect key="frame" x="14" y="13" width="115" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Play out.mid" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9be-MT-Pyq">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="playMidi:" target="XfG-lQ-9wD" id="ghY-1P-3CX"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9dT-Av-28u">
+                                <rect key="frame" x="129" y="13" width="69" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KVS-bR-cBa">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="stop:" target="XfG-lQ-9wD" id="D0P-Yv-qwA"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S8W-RM-uZg">
+                                <rect key="frame" x="200" y="117" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="l40-fc-zXC">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openTestWindow:" target="XfG-lQ-9wD" id="m0T-th-Cdq"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oik-ol-jqh">
+                                <rect key="frame" x="296" y="74" width="102" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="WCButton" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HxW-YO-v7w">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="showWordCountWindowWith_sender:" target="XfG-lQ-9wD" id="Qgq-3j-ujB"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kiD-by-HIW">
+                                <rect key="frame" x="19" y="89" width="140" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="OpenAUWindow" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DEO-ur-mGp">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openAUWindow:" target="XfG-lQ-9wD" id="Uck-Ln-qpV"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="openPluginButton" destination="Ame-xS-DV6" id="hpu-m0-RGN"/>
+                        <outlet property="playMidiButton" destination="DMb-d1-HuP" id="33B-f6-tuj"/>
                         <outlet property="pluginPopup" destination="WmR-iB-6Ee" id="FQL-Xf-Ktw"/>
+                        <outlet property="stopButton" destination="9dT-Av-28u" id="mlQ-HF-IDs"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="826"/>
+        </scene>
+        <!--Word Count Window Controller-->
+        <scene sceneID="3FY-dF-v6s">
+            <objects>
+                <windowController storyboardIdentifier="Word Count Window Controller" id="eSj-yr-hww" userLabel="Word Count Window Controller" sceneMemberID="viewController">
+                    <window key="window" title="Word Count" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="GDP-q4-O0E">
+                        <windowStyleMask key="styleMask" titled="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="240" width="300" height="150"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+                        <connections>
+                            <outlet property="delegate" destination="eSj-yr-hww" id="BaQ-sH-5KF"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="mIY-46-WxC" kind="relationship" relationship="window.shadowedContentViewController" id="YbX-PM-lrA"/>
+                    </connections>
+                </windowController>
+                <customObject id="NJk-1S-Nzx" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-790" y="136"/>
+        </scene>
+        <!--AU Window Controller-->
+        <scene sceneID="ang-zn-hIa">
+            <objects>
+                <windowController storyboardIdentifier="AU Window Controller" id="bIl-14-mgj" userLabel="AU Window Controller" sceneMemberID="viewController">
+                    <window key="window" title="Audio Unit" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="nGV-nG-tSx">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+                        <connections>
+                            <outlet property="delegate" destination="bIl-14-mgj" id="Lzy-Og-a5g"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="I6Z-5E-WJW" kind="relationship" relationship="window.shadowedContentViewController" id="hVb-c5-heK"/>
+                    </connections>
+                </windowController>
+                <customObject id="ARR-1w-VtE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1594" y="403"/>
+        </scene>
+        <!--AU View Controller-->
+        <scene sceneID="J4o-cV-Rqs">
+            <objects>
+                <viewController id="I6Z-5E-WJW" userLabel="AU View Controller" customClass="AUViewController" customModule="PluginViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="LVS-Op-MH1">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KGP-Ot-cUo">
+                                <rect key="frame" x="46" y="175" width="66" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Some text" id="vWT-uZ-oqx">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KGP-Ot-cUo" secondAttribute="trailing" constant="370" id="3qx-Xl-QVh"/>
+                            <constraint firstItem="KGP-Ot-cUo" firstAttribute="top" secondItem="LVS-Op-MH1" secondAttribute="top" constant="78" id="Gze-dw-W21"/>
+                            <constraint firstItem="KGP-Ot-cUo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LVS-Op-MH1" secondAttribute="leading" constant="20" symbolic="YES" id="YKn-zM-rSN"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="m3W-0B-xmb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1594" y="913"/>
+        </scene>
+        <!--Word Count View Controller-->
+        <scene sceneID="PLM-s4-mmH">
+            <objects>
+                <viewController id="mIY-46-WxC" customClass="WordCountViewController" customModule="PluginViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="OYk-by-Fam">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hpE-d4-4vr">
+                                <rect key="frame" x="55" y="96" width="75" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" alignment="right" title="Word count" id="AMB-XN-NRf">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SC7-zF-1H7">
+                                <rect key="frame" x="192" y="96" width="51" height="21"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" alignment="right" title="a" id="A06-TK-CGQ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="mIY-46-WxC" name="value" keyPath="wordCount" id="dgz-aN-bVh"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pla-DQ-eca">
+                                <rect key="frame" x="55" y="54" width="105" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" alignment="right" title="Paragraph count" id="RFg-tK-yyC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zHp-Yt-bzJ">
+                                <rect key="frame" x="192" y="54" width="51" height="21"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" alignment="right" title="b" id="3X4-sc-WzW">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="mIY-46-WxC" name="value" keyPath="paragraphCount" id="BxY-25-cRl"/>
+                                </connections>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="phm-qe-Ojx">
+                                <rect key="frame" x="121" y="13" width="59" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OWD-Jm-VAZ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="dismissWordCountWindow:" target="mIY-46-WxC" id="xvp-od-MKv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="q9G-9M-ZGM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-790" y="555"/>
         </scene>
     </scenes>
 </document>
