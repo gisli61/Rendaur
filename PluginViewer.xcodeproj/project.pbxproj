@@ -15,7 +15,6 @@
 		522C6A6522A0036800E43D27 /* MyWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C6A6422A0036800E43D27 /* MyWindowController.swift */; };
 		5252810522AB03A6001E8965 /* TestWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252810322AB03A6001E8965 /* TestWindow.swift */; };
 		5252810622AB03A6001E8965 /* TestWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5252810422AB03A6001E8965 /* TestWindow.xib */; };
-		5252810822AB11D3001E8965 /* WordCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252810722AB11D3001E8965 /* WordCountViewController.swift */; };
 		5252810A22AB3677001E8965 /* AUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252810922AB3677001E8965 /* AUViewController.swift */; };
 		52D9769822A877D30042A2FD /* MidiFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9769722A877D30042A2FD /* MidiFilePlayer.swift */; };
 		52EFA2A522A9BE890084C323 /* AudioUnitWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52EFA2A422A9BE890084C323 /* AudioUnitWindow.xib */; };
@@ -34,7 +33,6 @@
 		522C6A6422A0036800E43D27 /* MyWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWindowController.swift; sourceTree = "<group>"; };
 		5252810322AB03A6001E8965 /* TestWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWindow.swift; sourceTree = "<group>"; };
 		5252810422AB03A6001E8965 /* TestWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestWindow.xib; sourceTree = "<group>"; };
-		5252810722AB11D3001E8965 /* WordCountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCountViewController.swift; sourceTree = "<group>"; };
 		5252810922AB3677001E8965 /* AUViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUViewController.swift; sourceTree = "<group>"; };
 		52D9769722A877D30042A2FD /* MidiFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFilePlayer.swift; sourceTree = "<group>"; };
 		52EFA2A422A9BE890084C323 /* AudioUnitWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioUnitWindow.xib; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 		522C6A4B229F439C00E43D27 /* PluginViewer */ = {
 			isa = PBXGroup;
 			children = (
-				5252810722AB11D3001E8965 /* WordCountViewController.swift */,
 				522C6A4C229F439C00E43D27 /* AppDelegate.swift */,
 				522C6A4E229F439C00E43D27 /* ViewController.swift */,
 				52EFA2A422A9BE890084C323 /* AudioUnitWindow.xib */,
@@ -171,7 +168,6 @@
 				522C6A4F229F439C00E43D27 /* ViewController.swift in Sources */,
 				522C6A4D229F439C00E43D27 /* AppDelegate.swift in Sources */,
 				52D9769822A877D30042A2FD /* MidiFilePlayer.swift in Sources */,
-				5252810822AB11D3001E8965 /* WordCountViewController.swift in Sources */,
 				5252810522AB03A6001E8965 /* TestWindow.swift in Sources */,
 				52EFA2A722A9BFA30084C323 /* AudioUnitWindow.swift in Sources */,
 				522C6A5D229F4E7F00E43D27 /* PluginManager.swift in Sources */,

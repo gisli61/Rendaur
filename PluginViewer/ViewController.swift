@@ -12,7 +12,9 @@ import CoreAudioKit
 
 class ViewController: NSViewController {
     
+    let windowPrefix = "FX"
     var currentInstrument:AUAudioUnit?
+    var currentAVInstrument:AVAudioUnit?
     private var midiFilePlayer:MidiFilePlayer?
     private var myWindowController: NSWindowController? // Temporary store
     private var testWindowController: NSWindowController?
@@ -41,7 +43,55 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
+    
+    private func createAUWindow(viewController: NSViewController,
+                                audioUnit: AVAudioUnit,
+                                identifier: Int,
+                                origin: NSPoint? = nil,
+                                color: NSColor? = nil) {
+        let incomingFrame = viewController.view.frame
+        let windowController = AudioUnitWindow(audioUnit: audioUnit)
+        
+        guard let unitWindow = windowController.window else {
+            print("Have no window")
+            return
+        }
+        guard let auName = audioUnit.auAudioUnit.audioUnitName else {
+            print("Have no audioUnitName")
+            return
+        }
+        
+        let winId = windowPrefix + String(identifier)
+        //let windowFrame = NSRect(origin: origin,
+        //                         size: NSSize(width: incomingFrame.width, height: incomingFrame.height + 30))
+        unitWindow.delegate = self
+        
+        windowController.scrollView?.removeFromSuperview()
+        windowController.contentViewController = viewController
+        
+        view.window?.addChildWindow(unitWindow, ordered: NSWindow.OrderingMode.above)
+    }
+    
+    public func showAudioUnit(_ audioUnit: AVAudioUnit) {
+        audioUnit.auAudioUnit.requestViewController { [weak self] viewController in
+            guard let strongSelf = self else {
+                print("self missing")
+                return
+            }
+            
+            guard let ui = viewController else {
+                print("no viewController!")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                strongSelf.createAUWindow(viewController:ui,
+                                          audioUnit: audioUnit,
+                                          identifier: 6)
+            }
+        }
+        
+    }
     //MARK: Actions
     @IBAction func changePlugin(_ sender: NSPopUpButton) {
         guard let pluginName = sender.titleOfSelectedItem else {
@@ -53,6 +103,7 @@ class ViewController: NSViewController {
             return
         }
         print("Loaded \(instrument.name)")
+        currentAVInstrument = instrument
         currentInstrument = instrument.auAudioUnit
         
         guard let current = currentInstrument else {
@@ -91,24 +142,7 @@ class ViewController: NSViewController {
        */
 
     }
-    
-    @IBAction func showWordCountWindow(_sender: AnyObject) {
-        
-        let storyboard = NSStoryboard(name:"Main", bundle:nil)
-        let wordCountWindowController = storyboard.instantiateController(withIdentifier: "Word Count Window Controller") as! NSWindowController
-        
-        if let wordCountWindow = wordCountWindowController.window {
-            let wordCountViewController = wordCountWindow.contentViewController as! WordCountViewController
-            wordCountViewController.wordCount = "gisli"
-            wordCountViewController.paragraphCount = "hu"
-            
-            let application = NSApplication.shared
-            application.runModal(for: wordCountWindow)
-            
-            wordCountWindow.close()
-        }
-    }
-    
+
     @IBAction func openTestWindow(_ sender:NSButton) {
 
         testWindowController = TestWindow()
@@ -116,7 +150,7 @@ class ViewController: NSViewController {
             print("Could not get window")
             return
         }
-        print(wc.windowNibName)
+        print(wc.windowNibName ?? "No window nib name")
         wc.showWindow(nil)
         if wc.window == nil {
             print("No window here either")
@@ -126,10 +160,16 @@ class ViewController: NSViewController {
     }
     
     @IBAction func openPluginWindow(_ sender:NSButton) {
+        guard let currentAV = currentAVInstrument else {
+            print("No plugin selected!")
+            return
+        }
         guard let current = currentInstrument else {
             print("No plugin selected!")
             return
         }
+        
+        //showAudioUnit(currentAV)
         
         current.requestViewController() { nsViewController in
             //guard let vc = nsViewController else {
@@ -143,6 +183,7 @@ class ViewController: NSViewController {
             self.myWindowController!.showWindow(nil)
             print("Got here")
         }
+        
 
     }
     
@@ -185,30 +226,28 @@ class ViewController: NSViewController {
         }
         
         auWindow.title=auName
-        //auWindow.delegate=self
+        auWindow.delegate=self
         
-        /*
+        
         current.requestViewController() { [weak self] nsViewController in
             guard let vc = nsViewController else {
                 print("viewController is nil")
                 return
             }
             print("have a view controller")
-            //let wc = MyWindowController()
-            //wc.showWindow(nil)
-            //self.myWindowController = wc
-            //self.myWindowController!.showWindow(nil)
             auWindowController.contentViewController = vc
-            auWindowController.showWindow(nil)
-            print("Got here")
+            print("Did the completion")
         }
-        */
-
         
-        //auWindowController.showWindow(nil)
+        auWindowController.showWindow(nil)
     }
     
     
     
 }
 
+extension ViewController: NSWindowDelegate {
+    func windowWillClose(_ notification: Notification) {
+    }
+
+}

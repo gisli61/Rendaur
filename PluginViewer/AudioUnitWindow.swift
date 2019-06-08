@@ -10,6 +10,7 @@ import AVFoundation
 import Cocoa
 
 class AudioUnitWindow:NSWindowController {
+    @IBOutlet var scrollView: NSScrollView!
     
     /*
     override var windowNibName: String? {
@@ -17,8 +18,12 @@ class AudioUnitWindow:NSWindowController {
     }
     */
     
-    convenience init() {
+    private var audioUnit: AVAudioUnit?
+    
+    convenience init(audioUnit: AVAudioUnit) {
         self.init(windowNibName: "AudioUnitWindow")
+        contentViewController?.view.wantsLayer = true
+        self.audioUnit = audioUnit
     }
     
     /*
@@ -35,9 +40,6 @@ class AudioUnitWindow:NSWindowController {
             return
         }
     }
-    
-    @IBAction func buttonPushed(_ sender: NSButton) {
-        print("pushed button")
-    }
+
     
 }

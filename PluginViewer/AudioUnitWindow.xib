@@ -5,7 +5,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AudioUnitWindow" customModule="PluginViewer" customModuleProvider="target"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="AudioUnitWindow" customModule="PluginViewer" customModuleProvider="target">
+            <connections>
+                <outlet property="scrollView" destination="yro-Ak-ywG" id="zK5-Qv-0AZ"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
@@ -17,18 +21,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7D3-vB-9fc">
-                        <rect key="frame" x="208" y="117" width="66" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hEU-SI-qqp">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="buttonPushed:" target="-2" id="TkZ-0h-Jd1"/>
-                        </connections>
-                    </button>
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="yro-Ak-ywG">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <clipView key="contentView" copiesOnScroll="NO" id="PdE-3I-1YQ">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zFE-oa-fxw">
+                                    <rect key="frame" x="0.0" y="0.0" width="522" height="255"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="t80-AI-P5X">
+                            <rect key="frame" x="0.0" y="254" width="480" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="4sv-fL-3YU">
+                            <rect key="frame" x="465" y="1" width="16" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="yro-Ak-ywG" secondAttribute="trailing" id="5kM-o1-ZZZ"/>
+                    <constraint firstItem="yro-Ak-ywG" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="XDD-jT-l1L"/>
+                    <constraint firstAttribute="bottom" secondItem="yro-Ak-ywG" secondAttribute="bottom" id="opf-V6-iSH"/>
+                    <constraint firstItem="yro-Ak-ywG" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="qCn-Sv-ckl"/>
+                </constraints>
             </view>
             <point key="canvasLocation" x="-22" y="-14"/>
         </window>
