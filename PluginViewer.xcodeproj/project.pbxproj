@@ -63,9 +63,9 @@
 				522C6A4E229F439C00E43D27 /* ViewController.swift */,
 				522C6A5C229F4E7F00E43D27 /* PluginManager.swift */,
 				52D9769722A877D30042A2FD /* MidiFilePlayer.swift */,
+				5252810922AB3677001E8965 /* AUViewController.swift */,
 				522C6A50229F439E00E43D27 /* Assets.xcassets */,
 				522C6A52229F439E00E43D27 /* Main.storyboard */,
-				5252810922AB3677001E8965 /* AUViewController.swift */,
 				522C6A55229F439E00E43D27 /* Info.plist */,
 				522C6A56229F439E00E43D27 /* PluginViewer.entitlements */,
 			);

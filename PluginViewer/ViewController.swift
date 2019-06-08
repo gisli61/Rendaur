@@ -12,15 +12,14 @@ import CoreAudioKit
 
 class ViewController: NSViewController {
     
-    let windowPrefix = "FX"
+    //MARK: Properties
     var currentInstrument:AUAudioUnit?
     var currentAVInstrument:AVAudioUnit?
     private var midiFilePlayer:MidiFilePlayer?
     private var testWindowController: NSWindowController?
 
-    //MARK: Properties
+    //MARK: Outlets
     @IBOutlet weak var pluginPopup: NSPopUpButton!
-    //@IBOutlet weak var openPluginButton: NSButton!
     @IBOutlet weak var playMidiButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
     
@@ -37,12 +36,6 @@ class ViewController: NSViewController {
         }
 
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
     
     //MARK: Actions
     @IBAction func changePlugin(_ sender: NSPopUpButton) {
@@ -58,11 +51,6 @@ class ViewController: NSViewController {
         currentAVInstrument = instrument
         currentInstrument = instrument.auAudioUnit
         
-        guard let current = currentInstrument else {
-            print("No plugin selected!")
-            return
-        }
-
     }
     
     @IBAction func playMidi(_ sender:NSButton) {
@@ -84,7 +72,7 @@ class ViewController: NSViewController {
         midiFilePlayer.stop()
     }
     
-    @IBAction func openAUWindow(_ sender: NSButton) {
+    @IBAction func openPluginWindow(_ sender: NSButton) {
         guard let current = currentInstrument else {
             print("No plugin selected!")
             return
@@ -106,15 +94,14 @@ class ViewController: NSViewController {
         auWindow.title=auName
         auWindow.delegate=self
         
-        
         current.requestViewController() { [weak self] nsViewController in
             guard let vc = nsViewController else {
                 print("viewController is nil")
                 return
             }
-            print("have a view controller")
+
             auWindowController.contentViewController = vc
-            print("Did the completion")
+
         }
         
         auWindowController.showWindow(nil)

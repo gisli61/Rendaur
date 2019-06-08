@@ -751,7 +751,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="openAUWindow:" target="XfG-lQ-9wD" id="Uck-Ln-qpV"/>
+                                    <action selector="openPluginWindow:" target="XfG-lQ-9wD" id="aPI-5p-rAe"/>
                                 </connections>
                             </button>
                         </subviews>
