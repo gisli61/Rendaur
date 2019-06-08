@@ -794,21 +794,6 @@
                     <view key="view" id="LVS-Op-MH1">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KGP-Ot-cUo">
-                                <rect key="frame" x="46" y="175" width="66" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Some text" id="vWT-uZ-oqx">
-                                    <font key="font" usesAppearanceFont="YES"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="KGP-Ot-cUo" secondAttribute="trailing" constant="370" id="3qx-Xl-QVh"/>
-                            <constraint firstItem="KGP-Ot-cUo" firstAttribute="top" secondItem="LVS-Op-MH1" secondAttribute="top" constant="78" id="Gze-dw-W21"/>
-                            <constraint firstItem="KGP-Ot-cUo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LVS-Op-MH1" secondAttribute="leading" constant="20" symbolic="YES" id="YKn-zM-rSN"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="m3W-0B-xmb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
