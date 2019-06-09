@@ -33,6 +33,9 @@ class ViewController: NSViewController {
         for x in listInstruments() {
             pluginPopup.addItem(withTitle: x)
         }
+        for x in listPresets() {
+            pluginPopup.addItem(withTitle: x)
+        }
 
     }
     

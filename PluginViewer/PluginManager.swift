@@ -28,6 +28,13 @@ func listInstruments() -> [String] {
     return instruments
 }
 
+func listPresets() -> [String] {
+    return ["/Users/gislim/Documents/Verkefni/Code/raunder/Kontakt_ragtime3.plist",
+            "/Users/gislim/Documents/Verkefni/Code/raunder/raunder/Kontakt_epiano.plist",
+            "/Users/gislim/Documents/Verkefni/Code/raunder/Crystal_1.plist"
+    ]
+}
+
 func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     let anyAudioUnitDescription = AudioComponentDescription()
     let units = AVAudioUnitComponentManager.shared().components(matching: anyAudioUnitDescription)
