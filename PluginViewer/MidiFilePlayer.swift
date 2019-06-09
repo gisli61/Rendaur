@@ -13,10 +13,9 @@ class MidiFilePlayer {
     
     private let audioEngine:AVAudioEngine
     private let midiSequencer:AVAudioSequencer
-    private var midiInstrument:AVAudioUnitMIDIInstrument?
     private var canPlay:Bool = false
     
-    var instrument:String? {
+    var midiInstrument:AVAudioUnitMIDIInstrument? {
         willSet {
             if audioEngine.isRunning {
                 audioEngine.stop()
@@ -26,13 +25,8 @@ class MidiFilePlayer {
             }
         }
         didSet {
-            guard let instrument = instrument else {
-                midiInstrument = nil
-                return
-            }
-            midiInstrument = getAVAudioUnitMIDIInstrument(instrument)
             guard let midiInstrument = midiInstrument else {
-                print("Failed to set up instrument")
+                print("Bug: midi instrument is nil!")
                 return
             }
             audioEngine.attach(midiInstrument)
@@ -40,10 +34,9 @@ class MidiFilePlayer {
             do {
                 try audioEngine.start()
             } catch {
-                print("###Error: could not start engine")
+                print("###Error: Could not start engine")
                 return
             }
-
         }
     }
     

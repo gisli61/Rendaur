@@ -13,7 +13,7 @@ import CoreAudioKit
 class ViewController: NSViewController {
     
     //MARK: Properties
-    var currentInstrument:AVAudioUnit?
+    var currentInstrument:AVAudioUnitMIDIInstrument?
     private var midiFilePlayer:MidiFilePlayer?
     private var testWindowController: NSWindowController?
 
@@ -48,7 +48,7 @@ class ViewController: NSViewController {
         }
         print("Loaded \(instrument.name)")
         currentInstrument = instrument
-         
+        
     }
     
     @IBAction func playMidi(_ sender:NSButton) {
@@ -56,8 +56,11 @@ class ViewController: NSViewController {
             print("No midi player!")
             return
         }
-        //midiFilePlayer.instrument = "AUMIDISynth"
-        midiFilePlayer.instrument = "AUMIDISynth"
+        guard let instrument = currentInstrument else {
+            print("No plugin selected")
+            return
+        }
+        midiFilePlayer.midiInstrument = instrument
         midiFilePlayer.midiFile   = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.play()
     }
