@@ -754,6 +754,17 @@
                                     <action selector="openPluginWindow:" target="XfG-lQ-9wD" id="aPI-5p-rAe"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cCn-0X-CV0">
+                                <rect key="frame" x="198" y="13" width="84" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Render" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SRx-r7-QFr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="renderMidi:" target="XfG-lQ-9wD" id="ue1-dR-On9"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>

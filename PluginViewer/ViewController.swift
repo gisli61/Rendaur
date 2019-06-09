@@ -75,6 +75,21 @@ class ViewController: NSViewController {
         midiFilePlayer.play()
     }
     
+    @IBAction func renderMidi(_ sender:NSButton) {
+        guard let midiFilePlayer = midiFilePlayer else {
+            print("No midi player!")
+            return
+        }
+        guard currentInstrument != nil else {
+            print("No plugin selected")
+            return
+        }
+        midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
+        midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
+        midiFilePlayer.render()
+
+    }
+    
     @IBAction func stop(_ sender:NSButton) {
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi player!")
