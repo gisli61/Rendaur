@@ -67,8 +67,13 @@ class MidiFilePlayer {
     }
     
     func play() {
+        
         guard canPlay else {
-            print("Not ready to play")
+            print("Not ready to play: No midi file")
+            return
+        }
+        guard midiInstrument != nil else {
+            print("Not ready to play: No plugin")
             return
         }
         

@@ -49,6 +49,13 @@ class ViewController: NSViewController {
         print("Loaded \(instrument.name)")
         currentInstrument = instrument
         
+        guard let midiFilePlayer = midiFilePlayer else {
+            print("No midi file player!! Something serious happened")
+            return
+        }
+        
+        midiFilePlayer.midiInstrument = currentInstrument
+        
     }
     
     @IBAction func playMidi(_ sender:NSButton) {
@@ -56,11 +63,11 @@ class ViewController: NSViewController {
             print("No midi player!")
             return
         }
-        guard let instrument = currentInstrument else {
+        guard currentInstrument != nil else {
             print("No plugin selected")
             return
         }
-        midiFilePlayer.midiInstrument = instrument
+        //midiFilePlayer.midiInstrument = instrument
         midiFilePlayer.midiFile   = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.play()
     }
