@@ -28,19 +28,6 @@ func listInstruments() -> [String] {
     return instruments
 }
 
-func getInstrument(_ name: String) -> AVAudioUnitComponent? {
-    let anyAudioUnitDescription = AudioComponentDescription()
-    let componentManager = AVAudioUnitComponentManager.shared()
-    let units = componentManager.components(matching: anyAudioUnitDescription)
-
-    for x in units {
-        if x.name == name {
-            return x
-        }
-    }
-    return nil
-}
-
 func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     let anyAudioUnitDescription = AudioComponentDescription()
     let units = AVAudioUnitComponentManager.shared().components(matching: anyAudioUnitDescription)
@@ -51,33 +38,6 @@ func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     }
     return nil
 }
-
-/*
-func getAVAudioUnit(_ name:String) -> AVAudioUnit? {
-    var a:AVAudioUnit?
-    
-    guard let desc = getAudioComponentDescription(name:name) else {
-        print("###Error: Could not get \(name) description")
-        return nil
-    }
-    
-    let flags = AudioComponentFlags(rawValue: desc.componentFlags)
-    let canLoadInProcess = flags.contains(AudioComponentFlags.canLoadInProcess)
-    print("Can load in process: \(canLoadInProcess)")
-    let loadOptions: AudioComponentInstantiationOptions = canLoadInProcess ? .loadInProcess : .loadOutOfProcess
-    
-    AVAudioUnit.instantiate(with: desc, options: loadOptions) {  avAudioUnit, error in
-        if error != nil {
-            print("###Error: \(String(describing: error)): getAVAudioUnit")
-            a = avAudioUnit
-        } else {
-            a = avAudioUnit
-        }
-        
-    }
-    return a
-}
-*/
 
 func readState(_ plistFile:String) -> [String:Any]? {
     var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml //Format of the Property List.
@@ -118,77 +78,16 @@ func getAVAudioUnitMIDIInstrument(_ name:String) -> AVAudioUnitMIDIInstrument? {
         plugin = name
     }
     
-    guard let synth1 = getAudioComponentDescription(name:plugin) else {
+    guard let description = getAudioComponentDescription(name:plugin) else {
         print("###Error: Could not get \(plugin) description")
         return nil
     }
     
-    let midiInstrument = AVAudioUnitMIDIInstrument(audioComponentDescription: synth1)
+    let midiInstrument = AVAudioUnitMIDIInstrument(audioComponentDescription: description)
     
     if state != nil {
         midiInstrument.auAudioUnit.fullStateForDocument = state
     }
     
     return midiInstrument
-}
-
-func play(midiFile:String, plugin:String="AUMIDISynth") {
-    
-    guard let midiInstrument = getAVAudioUnitMIDIInstrument(plugin) else {
-        print("###Error: Could not get \(plugin)")
-        return
-    }
-    
-    let audioEngine = AVAudioEngine()
-    
-    audioEngine.attach(midiInstrument)
-    audioEngine.connect(midiInstrument, to: audioEngine.mainMixerNode, format: nil)
-    audioEngine.connect(audioEngine.mainMixerNode, to: audioEngine.outputNode, format: nil)
-        
-    do {
-        try audioEngine.start()
-    } catch {
-        print("###Error: could not start engine")
-        return
-    }
-    
-    let sequencer = AVAudioSequencer(audioEngine: audioEngine)
-    
-    print(midiFile)
-    
-    let fileURL = URL(fileURLWithPath: midiFile)
-    
-    print(fileURL.absoluteString)
-    
-    do {
-        try sequencer.load(from: fileURL, options: .smfChannelsToTracks)
-    } catch {
-        print("###Error: Failed to load midi sequence")
-        return
-    }
-    
-    var lengthInSeconds:TimeInterval = 0
-    for t in sequencer.tracks {
-        if t.lengthInSeconds > lengthInSeconds {
-            lengthInSeconds = t.lengthInSeconds
-        }
-    }
-    
-    if lengthInSeconds > 60.0 {
-        print("Midi file is \(lengthInSeconds) seconds. Will not play")
-        return
-    }
-    
-    sequencer.prepareToPlay()
-    
-    do {
-        try sequencer.start()
-    } catch {
-        print("###Error: Failed to start sequencer")
-        return
-    }
-    
-    print("playing")
-    sleep(UInt32(lengthInSeconds+0.5))
-    
 }
