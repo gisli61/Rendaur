@@ -13,8 +13,7 @@ import CoreAudioKit
 class ViewController: NSViewController {
     
     //MARK: Properties
-    var currentInstrument:AUAudioUnit?
-    var currentAVInstrument:AVAudioUnit?
+    var currentInstrument:AVAudioUnit?
     private var midiFilePlayer:MidiFilePlayer?
     private var testWindowController: NSWindowController?
 
@@ -48,9 +47,8 @@ class ViewController: NSViewController {
             return
         }
         print("Loaded \(instrument.name)")
-        currentAVInstrument = instrument
-        currentInstrument = instrument.auAudioUnit
-        
+        currentInstrument = instrument
+         
     }
     
     @IBAction func playMidi(_ sender:NSButton) {
@@ -73,15 +71,16 @@ class ViewController: NSViewController {
     }
     
     @IBAction func openPluginWindow(_ sender: NSButton) {
+        
         guard let current = currentInstrument else {
-            print("No plugin selected!")
+            print("no plugin selected!")
             return
         }
 
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         let auWindowController = storyboard.instantiateController(withIdentifier: "AU Window Controller") as! NSWindowController
         
-        guard let auName = current.audioUnitName else {
+        guard let auName = current.auAudioUnit.audioUnitName else {
             print("Found no name!")
             return
         }
@@ -94,7 +93,7 @@ class ViewController: NSViewController {
         auWindow.title=auName
         auWindow.delegate=self
         
-        current.requestViewController() { [weak self] nsViewController in
+        current.auAudioUnit.requestViewController() { [weak self] nsViewController in
             guard let vc = nsViewController else {
                 print("viewController is nil")
                 return

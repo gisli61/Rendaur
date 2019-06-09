@@ -52,6 +52,7 @@ func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     return nil
 }
 
+/*
 func getAVAudioUnit(_ name:String) -> AVAudioUnit? {
     var a:AVAudioUnit?
     
@@ -76,6 +77,7 @@ func getAVAudioUnit(_ name:String) -> AVAudioUnit? {
     }
     return a
 }
+*/
 
 func readState(_ plistFile:String) -> [String:Any]? {
     var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml //Format of the Property List.
