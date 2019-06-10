@@ -12,6 +12,8 @@ import CoreAudioKit
 
 class ViewController: NSViewController {
     
+    static var vc:ViewController?
+    
     //MARK: Properties
     var currentInstrument:AVAudioUnitMIDIInstrument?
     private var midiFilePlayer:MidiFilePlayer?
@@ -25,7 +27,7 @@ class ViewController: NSViewController {
     //MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("viewDidLoad")
         midiFilePlayer = MidiFilePlayer()
         
         // Do any additional setup after loading the view.
@@ -36,15 +38,11 @@ class ViewController: NSViewController {
         for x in listPresets() {
             pluginPopup.addItem(withTitle: x)
         }
-
+        ViewController.vc = self
     }
     
-    //MARK: Actions
-    @IBAction func changePlugin(_ sender: NSPopUpButton) {
-        guard let pluginName = sender.titleOfSelectedItem else {
-            print("Could not pick item")
-            return
-        }
+    //MARK: Functions
+    func _changePlugin(_ pluginName:String) {
         guard let instrument = getAVAudioUnitMIDIInstrument(pluginName) else {
             print("Could not load \(pluginName)")
             return
@@ -58,7 +56,29 @@ class ViewController: NSViewController {
         }
         
         midiFilePlayer.midiInstrument = currentInstrument
-        
+    }
+    
+    func _renderMidi() {
+        guard let midiFilePlayer = midiFilePlayer else {
+            print("No midi player!")
+            return
+        }
+        guard currentInstrument != nil else {
+            print("No plugin selected")
+            return
+        }
+        midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
+        midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
+        midiFilePlayer.render()
+    }
+
+    //MARK: Actions
+    @IBAction func changePlugin(_ sender: NSPopUpButton) {
+        guard let pluginName = sender.titleOfSelectedItem else {
+            print("Could not pick item")
+            return
+        }
+        self._changePlugin(pluginName)
     }
     
     @IBAction func playMidi(_ sender:NSButton) {
@@ -76,18 +96,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func renderMidi(_ sender:NSButton) {
-        guard let midiFilePlayer = midiFilePlayer else {
-            print("No midi player!")
-            return
-        }
-        guard currentInstrument != nil else {
-            print("No plugin selected")
-            return
-        }
-        midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
-        midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
-        midiFilePlayer.render()
-
+        self._renderMidi()
     }
     
     @IBAction func stop(_ sender:NSButton) {
