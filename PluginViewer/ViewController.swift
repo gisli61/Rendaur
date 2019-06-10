@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     //MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
+        //print("viewDidLoad")
         midiFilePlayer = MidiFilePlayer()
         
         // Do any additional setup after loading the view.
@@ -56,6 +56,7 @@ class ViewController: NSViewController {
         }
         
         midiFilePlayer.midiInstrument = currentInstrument
+        
     }
     
     func _renderMidi() {

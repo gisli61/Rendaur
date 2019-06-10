@@ -216,7 +216,7 @@ class MidiFilePlayer {
         }
         print("\(audioEngine.manualRenderingSampleTime)")
         midiInstrument.auAudioUnit.deallocateRenderResources()
-
+        audioEngine.disableManualRenderingMode()
     }
 
 }
