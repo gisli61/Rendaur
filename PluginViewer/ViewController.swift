@@ -16,6 +16,7 @@ class ViewController: NSViewController {
     
     //MARK: Properties
     var currentInstrument:AVAudioUnitMIDIInstrument?
+    var currentMidiURL:URL?
     private var midiFilePlayer:MidiFilePlayer?
     private var testWindowController: NSWindowController?
 
@@ -23,6 +24,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var pluginPopup: NSPopUpButton!
     @IBOutlet weak var playMidiButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
+    @IBOutlet weak var midiField: NSTextField!
     
     //MARK: Methods
     override func viewDidLoad() {
@@ -72,6 +74,11 @@ class ViewController: NSViewController {
         midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
         midiFilePlayer.render()
     }
+    
+    func _selectMidi(_ midiFile:URL) {
+        currentMidiURL = midiFile
+        midiField.stringValue = midiFile.path
+    }
 
     //MARK: Actions
     @IBAction func changePlugin(_ sender: NSPopUpButton) {
@@ -94,6 +101,23 @@ class ViewController: NSViewController {
         //midiFilePlayer.midiInstrument = instrument
         midiFilePlayer.midiFile   = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.play()
+    }
+    
+    @IBAction func selectMidi(_ sender:NSButton) {
+        let dialog = NSOpenPanel()
+        
+        dialog.title = "Select a midi file"
+        dialog.allowedFileTypes = ["mid","midi"]
+        
+        if dialog.runModal() == NSApplication.ModalResponse.OK {
+            guard let result = dialog.url else {
+                print("Something went wrong")
+                return
+            }
+            _selectMidi(result)
+        } else {
+            print("User cancelled")
+        }
     }
     
     @IBAction func renderMidi(_ sender:NSButton) {
