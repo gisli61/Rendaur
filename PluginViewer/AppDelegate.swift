@@ -45,9 +45,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         print(FileManager.default.currentDirectoryPath)
         
-        let inFile = CommandLine.arguments[renderIndex+1]
-        let plugin = CommandLine.arguments[renderIndex+2]
-        let outFile = CommandLine.arguments[renderIndex+3]
+        //let inFile = CommandLine.arguments[renderIndex+1]
+        //let plugin = CommandLine.arguments[renderIndex+2]
+        //let outFile = CommandLine.arguments[renderIndex+3]
         //Will want samplerate and bitdepth too
         
         //print(CommandLine.argc)

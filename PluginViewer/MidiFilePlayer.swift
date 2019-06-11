@@ -40,6 +40,24 @@ class MidiFilePlayer {
         }
     }
     
+    var midiURL:URL? {
+        didSet {
+            guard let midiURL = midiURL else {
+                canPlay = false
+                return
+            }
+            do {
+                try midiSequencer.load(from: midiURL, options: .smfChannelsToTracks)
+            } catch {
+                print("###Error: Failed to load midi sequence")
+                canPlay = false
+                return
+            }
+            canPlay = true
+        }
+    }
+    
+    /*
     var midiFile:String? {
         didSet {
             guard let midiFile = midiFile else {
@@ -59,6 +77,7 @@ class MidiFilePlayer {
 
         }
     }
+    */
     
     var wavFile:String?
     

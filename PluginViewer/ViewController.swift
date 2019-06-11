@@ -70,7 +70,8 @@ class ViewController: NSViewController {
             print("No plugin selected")
             return
         }
-        midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
+        //midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
+        midiFilePlayer.midiURL = currentMidiURL
         midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
         midiFilePlayer.render()
     }
@@ -99,7 +100,8 @@ class ViewController: NSViewController {
             return
         }
         //midiFilePlayer.midiInstrument = instrument
-        midiFilePlayer.midiFile   = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
+        //midiFilePlayer.midiFile   = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
+        midiFilePlayer.midiURL = currentMidiURL
         midiFilePlayer.play()
     }
     
