@@ -29,10 +29,13 @@ func listInstruments() -> [String] {
 }
 
 func listPresets() -> [String] {
+    /*
     return ["/Users/gislim/Documents/Verkefni/Code/raunder/Kontakt_ragtime3.plist",
             "/Users/gislim/Documents/Verkefni/Code/raunder/raunder/Kontakt_epiano.plist",
             "/Users/gislim/Documents/Verkefni/Code/raunder/Crystal_1.plist"
     ]
+    */
+    return []
 }
 
 func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
@@ -46,15 +49,15 @@ func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     return nil
 }
 
-func readState(_ plistFile:String) -> [String:Any]? {
+func readState(_ plistURL:URL) -> [String:Any]? {
     var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml //Format of the Property List.
-    let plistURL = URL(fileURLWithPath: plistFile)
+    //let plistURL = URL(fileURLWithPath: plistFile)
     var xmlData:Data
     
     do {
         xmlData = try Data(contentsOf: plistURL)
     } catch {
-        //print("###Warning: \(plistFile): Could not read file")
+        print("###Error: \(plistURL.path): Could not read file")
         return nil
     }
     
@@ -63,16 +66,27 @@ func readState(_ plistFile:String) -> [String:Any]? {
         let state = plistData as! Dictionary<String,Any>
         return state
     } catch {
-        print("###Error: \(plistFile): Could not parse file. Is this a plist?")
+        print("###Error: \(plistURL.path): Could not parse file. Is this a plist?")
         return nil
     }
     
 }
 
+func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) {
+    guard let state = readState(presetFile) else {
+        print("###Error: Could not read the state")
+        return
+    }
+    
+    //TODO: make sure manufacturer, type and subtype match
+    midiInstrument.auAudioUnit.fullStateForDocument = state
+}
+
 func getAVAudioUnitMIDIInstrument(_ name:String) -> AVAudioUnitMIDIInstrument? {
     let plugin:String
     
-    let state = readState(name)
+    let state:[String:Any]? = nil
+    //let state = readState(name)
     
     if state != nil {
         //pluginName = String(plugin.split(separator:"_")[0])

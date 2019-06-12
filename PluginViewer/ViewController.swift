@@ -17,14 +17,16 @@ class ViewController: NSViewController {
     //MARK: Properties
     var currentInstrument:AVAudioUnitMIDIInstrument?
     var currentMidiURL:URL?
+    var currentPresetURL:URL?
     private var midiFilePlayer:MidiFilePlayer?
-    private var testWindowController: NSWindowController?
+    //private var testWindowController: NSWindowController?
 
     //MARK: Outlets
     @IBOutlet weak var pluginPopup: NSPopUpButton!
     @IBOutlet weak var playMidiButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
     @IBOutlet weak var midiField: NSTextField!
+    @IBOutlet weak var presetField: NSTextField!
     
     //MARK: Methods
     override func viewDidLoad() {
@@ -51,6 +53,8 @@ class ViewController: NSViewController {
         }
         print("Loaded \(instrument.name)")
         currentInstrument = instrument
+        currentPresetURL = nil
+        presetField.stringValue = ""
         
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi file player!! Something serious happened")
@@ -79,6 +83,16 @@ class ViewController: NSViewController {
     func _selectMidi(_ midiFile:URL) {
         currentMidiURL = midiFile
         midiField.stringValue = midiFile.path
+    }
+    
+    func _selectPreset(_ presetFile:URL) {
+        guard let instrument = currentInstrument else {
+            print("No instrument selected! Should not be here")
+            return
+        }
+        currentPresetURL = presetFile
+        presetField.stringValue = presetFile.path
+        loadPreset(instrument,presetFile)
     }
 
     //MARK: Actions
@@ -117,6 +131,29 @@ class ViewController: NSViewController {
                 return
             }
             _selectMidi(result)
+        } else {
+            print("User cancelled")
+        }
+    }
+    
+    @IBAction func selectPreset(_ sender:NSButton) {
+        
+        if currentInstrument == nil {
+            print("No instrument selected! Button should be disabled")
+            return
+        }
+
+        let dialog = NSOpenPanel()
+        
+        dialog.title = "Select a preset"
+        dialog.allowedFileTypes = ["plist","preset"]
+        
+        if dialog.runModal() == NSApplication.ModalResponse.OK {
+            guard let result = dialog.url else {
+                print("Something went wrong")
+                return
+            }
+            _selectPreset(result)
         } else {
             print("User cancelled")
         }
