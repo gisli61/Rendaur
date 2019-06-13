@@ -79,7 +79,7 @@ class MidiFilePlayer {
     }
     */
     
-    var wavFile:String?
+    //var wavFile:String?
     
     init() {
         audioEngine = AVAudioEngine()
@@ -119,7 +119,7 @@ class MidiFilePlayer {
         midiSequencer.currentPositionInSeconds = 0
     }
     
-    func render() {
+    func render(_ outputURL:URL) {
 
         guard let midiInstrument = midiInstrument else {
             print("###Error: no instrument loaded")
@@ -131,10 +131,12 @@ class MidiFilePlayer {
             return
         }
         
+        /*
         guard let wavFile = wavFile else {
             print("Not ready to render: No wav file")
             return
         }
+        */
         
         //Safer to stop audioEngine while we are setting everything up.
         //Maybe not necessary
@@ -209,7 +211,7 @@ class MidiFilePlayer {
             AVNumberOfChannelsKey: 2
             ] as [String : Any]
         
-        let outputURL = URL(fileURLWithPath: wavFile)
+        //let outputURL = URL(fileURLWithPath: wavFile)
         let outputFile:AVAudioFile
         do {
             outputFile = try AVAudioFile(forWriting: outputURL, settings: outputFormatSettings, commonFormat: AVAudioCommonFormat.pcmFormatFloat32, interleaved: true)

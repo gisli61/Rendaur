@@ -72,14 +72,36 @@ func readState(_ plistURL:URL) -> [String:Any]? {
     
 }
 
-func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) {
+
+func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) -> Bool {
     guard let state = readState(presetFile) else {
         print("###Error: Could not read the state")
-        return
+        return false
     }
     
+    guard let oldState = midiInstrument.auAudioUnit.fullStateForDocument else {
+        print("instument has no state defined")
+        return false
+    }
+    
+    /*
+    if let val = oldState["manufacturer"] {
+        guard let ival = val as? Int else {
+            print("could not read manufacturer")
+            return false
+        }
+        print("Manufacturer :\(ival)")
+    }
+    if let val = oldState["type"] {
+        print("Type :\(val)")
+    }
+    if let val = oldState["subtype"] {
+        print("Subtype :\(val)")
+    }
+    */
     //TODO: make sure manufacturer, type and subtype match
     midiInstrument.auAudioUnit.fullStateForDocument = state
+    return true
 }
 
 func getAVAudioUnitMIDIInstrument(_ name:String) -> AVAudioUnitMIDIInstrument? {

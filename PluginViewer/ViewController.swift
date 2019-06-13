@@ -65,7 +65,7 @@ class ViewController: NSViewController {
         
     }
     
-    func _renderMidi() {
+    func _renderMidi(_ outputURL:URL) {
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi player!")
             return
@@ -76,13 +76,13 @@ class ViewController: NSViewController {
         }
         //midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.midiURL = currentMidiURL
-        midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
-        midiFilePlayer.render()
+        //midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
+        midiFilePlayer.render(outputURL)
     }
     
-    func _selectMidi(_ midiFile:URL) {
-        currentMidiURL = midiFile
-        midiField.stringValue = midiFile.path
+    func _selectMidi(_ midiURL:URL) {
+        currentMidiURL = midiURL
+        midiField.stringValue = midiURL.path
     }
     
     func _selectPreset(_ presetFile:URL) {
@@ -90,9 +90,13 @@ class ViewController: NSViewController {
             print("No instrument selected! Should not be here")
             return
         }
-        currentPresetURL = presetFile
-        presetField.stringValue = presetFile.path
-        loadPreset(instrument,presetFile)
+        let success = loadPreset(instrument,presetFile)
+        if success {
+            currentPresetURL = presetFile
+            presetField.stringValue = presetFile.path
+        } else {
+            print("Couldn't load preset")
+        }
     }
 
     //MARK: Actions
@@ -160,7 +164,29 @@ class ViewController: NSViewController {
     }
     
     @IBAction func renderMidi(_ sender:NSButton) {
-        self._renderMidi()
+        if currentInstrument == nil {
+            print("No instrument selected! Button should be disabled")
+            return
+        }
+        if currentMidiURL == nil {
+            print("No midi file selected! Button should be disabled")
+            return
+        }
+        
+        let savePanel = NSSavePanel()
+        savePanel.showsTagField = false
+        savePanel.nameFieldStringValue = "out.wav"
+        savePanel.begin { (result) in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                print("Get the URL")
+                guard let outputURL = savePanel.url else {
+                    print("Didn't get any url")
+                    return
+                }
+                self._renderMidi(outputURL)
+            }
+        }
+        //self._renderMidi()
     }
     
     @IBAction func stop(_ sender:NSButton) {
