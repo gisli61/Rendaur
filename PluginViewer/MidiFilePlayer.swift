@@ -119,16 +119,16 @@ class MidiFilePlayer {
         midiSequencer.currentPositionInSeconds = 0
     }
     
-    func render(_ outputURL:URL) {
+    func render(_ outputURL:URL) -> Bool {
 
         guard let midiInstrument = midiInstrument else {
             print("###Error: no instrument loaded")
-            return
+            return false
         }
         
         guard canPlay else {
             print("Not ready to render: No midi file")
-            return
+            return false
         }
         
         /*
@@ -145,25 +145,25 @@ class MidiFilePlayer {
         
         guard let format = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatFloat32, sampleRate: 48000.0, channels: 2, interleaved: true) else {
             print("###Error: AVAudioFormat failed")
-            return
+            return false
         }
         
         guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 512) else {
             print("###Error: AVAudioPCMBuffer failed")
-            return
+            return false
         }
         
         do {
             try audioEngine.enableManualRenderingMode(AVAudioEngineManualRenderingMode.offline, format: format, maximumFrameCount: 512)
         } catch {
             print("###Error: enableManualRenderingMode failed")
-            return
+            return false
         }
         do {
             try midiInstrument.auAudioUnit.allocateRenderResources()
         } catch {
             print("###Could not allocate render resources")
-            return
+            return false
         }
         
         //Start because we stopped above
@@ -172,13 +172,13 @@ class MidiFilePlayer {
             try audioEngine.start()
         } catch {
             print("###Error: could not start engine")
-            return
+            return false
         }
         
         //print(sequencer.tracks.count)
         var lengthInSeconds:TimeInterval = 0
         for t in midiSequencer.tracks {
-            print("Track length:\(t.lengthInSeconds)")
+            //print("Track length:\(t.lengthInSeconds)")
             if t.lengthInSeconds > lengthInSeconds {
                 lengthInSeconds = t.lengthInSeconds
             }
@@ -186,10 +186,12 @@ class MidiFilePlayer {
         
         if lengthInSeconds > 60.0 {
             print("Midi file is \(lengthInSeconds) seconds. Will not render")
-            return
+            return false
         }
-
-        let lengthInFrames = UInt32(lengthInSeconds*48000+0.5)
+        
+        let pad:TimeInterval = 1.0
+        
+        let lengthInFrames = UInt32((lengthInSeconds+pad)*48000+0.5)
         
         midiSequencer.prepareToPlay()
         
@@ -197,7 +199,7 @@ class MidiFilePlayer {
             try midiSequencer.start()
         } catch {
             print("###Error: Failed to start sequencer")
-            return
+            return false
         }
 
         let SAMPLE_RATE = Float64(48000.0)
@@ -217,7 +219,7 @@ class MidiFilePlayer {
             outputFile = try AVAudioFile(forWriting: outputURL, settings: outputFormatSettings, commonFormat: AVAudioCommonFormat.pcmFormatFloat32, interleaved: true)
         } catch {
             print("###Error: Could not open file for writing")
-            return
+            return false
         }
         while(audioEngine.manualRenderingSampleTime<lengthInFrames) {
             //print("\(audioEngine.manualRenderingSampleTime)")
@@ -225,19 +227,21 @@ class MidiFilePlayer {
                 try audioEngine.renderOffline(512, to: buffer)
             } catch {
                 print("###Error: renderOffline failed")
-                return
+                return false
             }
             
             do {
                 try outputFile.write(from: buffer)
             } catch let error as NSError {
                 print("###Error: \(error)")
-                return
+                return false
             }
         }
-        print("\(audioEngine.manualRenderingSampleTime)")
+        //print("\(audioEngine.manualRenderingSampleTime)")
         midiInstrument.auAudioUnit.deallocateRenderResources()
         audioEngine.disableManualRenderingMode()
+        
+        return true
     }
 
 }

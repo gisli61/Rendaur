@@ -51,7 +51,7 @@ class ViewController: NSViewController {
             print("Could not load \(pluginName)")
             return
         }
-        print("Loaded \(instrument.name)")
+        //print("Loaded \(instrument.name)")
         currentInstrument = instrument
         currentPresetURL = nil
         presetField.stringValue = ""
@@ -65,19 +65,20 @@ class ViewController: NSViewController {
         
     }
     
-    func _renderMidi(_ outputURL:URL) {
+    func _renderMidi(_ outputURL:URL) -> Bool {
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi player!")
-            return
+            return false
         }
         guard currentInstrument != nil else {
             print("No plugin selected")
-            return
+            return false
         }
         //midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.midiURL = currentMidiURL
         //midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
-        midiFilePlayer.render(outputURL)
+        let success = midiFilePlayer.render(outputURL)
+        return success
     }
     
     func _selectMidi(_ midiURL:URL) {
@@ -176,6 +177,7 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.showsTagField = false
         savePanel.nameFieldStringValue = "out.wav"
+        
         savePanel.begin { (result) in
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
                 print("Get the URL")
@@ -183,10 +185,17 @@ class ViewController: NSViewController {
                     print("Didn't get any url")
                     return
                 }
-                self._renderMidi(outputURL)
+                let _ = self._renderMidi(outputURL)
             }
         }
+        /*
+        guard let outputURL = savePanel.url else {
+            print("Didn't get any url")
+            return
+        }
+        self._renderMidi(outputURL)
         //self._renderMidi()
+        */
     }
     
     @IBAction func stop(_ sender:NSButton) {

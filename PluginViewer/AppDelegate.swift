@@ -28,7 +28,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         */
         
         if let rindex = CommandLine.arguments.firstIndex(of: "render") {
-            runFromCommandLine(rindex)
+            renderMidi(rindex)
+        } else if let lindex = CommandLine.arguments.firstIndex(of: "list") {
+            listPlugins(lindex)
         }
 
     }
@@ -37,13 +39,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
     
-    func runFromCommandLine(_ renderIndex: Int) {
+    func listPlugins(_ listIndex: Int) {
+        for instrumentName in listInstruments() {
+            print(instrumentName)
+        }
+        NSApplication.shared.terminate(0)
+    }
+    
+    func renderMidi(_ renderIndex: Int) {
         
         guard CommandLine.argc >= renderIndex + 5 else {
             failed("Arguments missing")
             return
         }
-        print(FileManager.default.currentDirectoryPath)
+        //print(FileManager.default.currentDirectoryPath)
         
         let midiFile = CommandLine.arguments[renderIndex+1]
         let plugin = CommandLine.arguments[renderIndex+2]
@@ -63,7 +72,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         vc._changePlugin(plugin)
         vc._selectMidi(midiURL)
         vc._selectPreset(presetURL)
-        vc._renderMidi(wavURL)
+        let success = vc._renderMidi(wavURL)
+        if !success {
+            print("Rendering failed")
+        }
         //print(CommandLine.argc)
         NSApplication.shared.terminate(0)
     }

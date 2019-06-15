@@ -26,7 +26,7 @@
 		522C6A56229F439E00E43D27 /* PluginViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PluginViewer.entitlements; sourceTree = "<group>"; };
 		522C6A5C229F4E7F00E43D27 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		5252810922AB3677001E8965 /* AUViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUViewController.swift; sourceTree = "<group>"; };
-		52B3582A22AE6B45003D0BDF /* render.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = render.sh; path = cli/render.sh; sourceTree = SOURCE_ROOT; };
+		52B3582A22AE6B45003D0BDF /* rendaur.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = rendaur.sh; path = cli/rendaur.sh; sourceTree = SOURCE_ROOT; };
 		52D9769722A877D30042A2FD /* MidiFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFilePlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,7 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				522C6A4C229F439C00E43D27 /* AppDelegate.swift */,
-				52B3582A22AE6B45003D0BDF /* render.sh */,
+				52B3582A22AE6B45003D0BDF /* rendaur.sh */,
 				522C6A4E229F439C00E43D27 /* ViewController.swift */,
 				522C6A5C229F4E7F00E43D27 /* PluginManager.swift */,
 				52D9769722A877D30042A2FD /* MidiFilePlayer.swift */,
