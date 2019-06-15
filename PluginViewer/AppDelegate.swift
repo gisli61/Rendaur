@@ -39,17 +39,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func runFromCommandLine(_ renderIndex: Int) {
         
-        guard CommandLine.argc >= renderIndex + 4 else {
+        guard CommandLine.argc >= renderIndex + 5 else {
             failed("Arguments missing")
             return
         }
         print(FileManager.default.currentDirectoryPath)
         
-        //let inFile = CommandLine.arguments[renderIndex+1]
-        //let plugin = CommandLine.arguments[renderIndex+2]
-        //let outFile = CommandLine.arguments[renderIndex+3]
+        let midiFile = CommandLine.arguments[renderIndex+1]
+        let plugin = CommandLine.arguments[renderIndex+2]
+        let presetFile = CommandLine.arguments[renderIndex+3]
+        let wavFile = CommandLine.arguments[renderIndex+4]
         //Will want samplerate and bitdepth too
-        
+        guard let vc = ViewController.vc else {
+            print("###Bug: have not viewController")
+            NSApplication.shared.terminate(0)
+            return
+        }
+        //print(FileManager.default.currentDirectoryPath)
+        let midiURL = URL(fileURLWithPath: midiFile)
+        let presetURL = URL(fileURLWithPath: presetFile)
+        let wavURL = URL(fileURLWithPath: wavFile)
+        //print(inURL)
+        vc._changePlugin(plugin)
+        vc._selectMidi(midiURL)
+        vc._selectPreset(presetURL)
+        vc._renderMidi(wavURL)
         //print(CommandLine.argc)
         NSApplication.shared.terminate(0)
     }
