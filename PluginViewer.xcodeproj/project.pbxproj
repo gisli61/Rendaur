@@ -14,6 +14,7 @@
 		522C6A5D229F4E7F00E43D27 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C6A5C229F4E7F00E43D27 /* PluginManager.swift */; };
 		5252810A22AB3677001E8965 /* AUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252810922AB3677001E8965 /* AUViewController.swift */; };
 		52D9769822A877D30042A2FD /* MidiFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9769722A877D30042A2FD /* MidiFilePlayer.swift */; };
+		52FFF1BA22B5BEB700A6A6E0 /* als2preset.py in Resources */ = {isa = PBXBuildFile; fileRef = 52FFF1B922B5BEB700A6A6E0 /* als2preset.py */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		52B3582A22AE6B45003D0BDF /* rendaur.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = rendaur.sh; path = cli/rendaur.sh; sourceTree = SOURCE_ROOT; };
 		52D9769722A877D30042A2FD /* MidiFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFilePlayer.swift; sourceTree = "<group>"; };
 		52FFF1B822B5AC7E00A6A6E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		52FFF1B922B5BEB700A6A6E0 /* als2preset.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = als2preset.py; path = cli/als2preset.py; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				522C6A4C229F439C00E43D27 /* AppDelegate.swift */,
 				52B3582A22AE6B45003D0BDF /* rendaur.sh */,
 				52FFF1B822B5AC7E00A6A6E0 /* README.md */,
+				52FFF1B922B5BEB700A6A6E0 /* als2preset.py */,
 				522C6A4E229F439C00E43D27 /* ViewController.swift */,
 				522C6A5C229F4E7F00E43D27 /* PluginManager.swift */,
 				52D9769722A877D30042A2FD /* MidiFilePlayer.swift */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				522C6A51229F439E00E43D27 /* Assets.xcassets in Resources */,
+				52FFF1BA22B5BEB700A6A6E0 /* als2preset.py in Resources */,
 				522C6A54229F439E00E43D27 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
