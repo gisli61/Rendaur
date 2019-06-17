@@ -229,7 +229,7 @@ class ViewController: NSViewController {
         auWindow.title=auName
         auWindow.delegate=self
         
-        current.auAudioUnit.requestViewController() { [weak self] nsViewController in
+        current.auAudioUnit.requestViewController() { nsViewController in
             guard let vc = nsViewController else {
                 print("viewController is nil")
                 return
