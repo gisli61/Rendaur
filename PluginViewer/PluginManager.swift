@@ -79,7 +79,7 @@ func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) -
         return false
     }
     
-    guard let oldState = midiInstrument.auAudioUnit.fullStateForDocument else {
+    guard let _ = midiInstrument.auAudioUnit.fullStateForDocument else {
         print("instument has no state defined")
         return false
     }
