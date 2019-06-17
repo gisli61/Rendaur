@@ -192,6 +192,8 @@ class MidiFilePlayer {
         let pad:TimeInterval = 1.0
         
         let lengthInFrames = UInt32((lengthInSeconds+pad)*48000+0.5)
+        //For testing purposes
+        //let lengthInFrames:UInt32 = 50000
         
         midiSequencer.prepareToPlay()
         
@@ -221,7 +223,12 @@ class MidiFilePlayer {
             print("###Error: Could not open file for writing")
             return false
         }
+        
+        //var displayInfo:Bool = true
+        //var frameNum = 1
+        
         while(audioEngine.manualRenderingSampleTime<lengthInFrames) {
+            //frameNum += 1
             //print("\(audioEngine.manualRenderingSampleTime)")
             do {
                 try audioEngine.renderOffline(512, to: buffer)
@@ -229,6 +236,29 @@ class MidiFilePlayer {
                 print("###Error: renderOffline failed")
                 return false
             }
+            
+            /*
+             //This code works fine. Should of course only be invocated if
+             //user asks for float data. The example below assumes 2 channels
+            if frameNum < 100 {
+                //print("Channel count: \(format.channelCount)")
+                //print("Buffer length :\(buffer.frameLength)")
+                //print("Stride: \(buffer.stride)")
+                //buffer.floatChannelData
+                if let channelData = buffer.floatChannelData {
+                    //print("Have channel data")
+                    //print(channelData[0] as! Float)
+                    let c1 = channelData.pointee
+                    //print(c1.pointee)
+                    for index in 0...511 {
+                        print("\(c1.advanced(by: 2*index).pointee)\t\(c1.advanced(by: 2*index+1).pointee)")
+                    }
+                } else {
+                    print("No channel data")
+                }
+                displayInfo = false
+            }
+            */
             
             do {
                 try outputFile.write(from: buffer)
