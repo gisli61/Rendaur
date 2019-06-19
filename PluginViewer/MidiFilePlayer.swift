@@ -191,7 +191,10 @@ class MidiFilePlayer {
         
         let pad:TimeInterval = 1.0
         
-        let lengthInFrames = UInt32((lengthInSeconds+pad)*48000+0.5)
+        let lengthInFrames = (UInt32(round((lengthInSeconds+pad)*48000))/512)*512
+        
+        print("lengthInFrames: \(lengthInFrames)")
+        
         //For testing purposes
         //let lengthInFrames:UInt32 = 50000
         
@@ -204,8 +207,9 @@ class MidiFilePlayer {
             return false
         }
 
-        let SAMPLE_RATE = Float64(48000.0)
+        //let SAMPLE_RATE = Float64(48000.0)
         
+        /*
         let outputFormatSettings = [
             AVFormatIDKey:kAudioFormatLinearPCM,
             AVLinearPCMBitDepthKey:32,
@@ -214,8 +218,24 @@ class MidiFilePlayer {
             AVSampleRateKey: SAMPLE_RATE,
             AVNumberOfChannelsKey: 2
             ] as [String : Any]
+        */
         
         //let outputURL = URL(fileURLWithPath: wavFile)
+        
+        //let fileManager = FileManager()
+        
+        //fileManager.
+        
+        let header=create48k32bitFloatWavHeader(lengthInFrames)
+        
+        guard let fileHandle = FileHandle(forWritingAtPath: outputURL.path) else {
+            print("###Error: could not create file handle")
+            return false
+        }
+        
+        fileHandle.write(header)
+
+        /******Will do this myself, as this doesn't create float data
         let outputFile:AVAudioFile
         do {
             outputFile = try AVAudioFile(forWriting: outputURL, settings: outputFormatSettings, commonFormat: AVAudioCommonFormat.pcmFormatFloat32, interleaved: true)
@@ -223,6 +243,7 @@ class MidiFilePlayer {
             print("###Error: Could not open file for writing")
             return false
         }
+        */
         
         //var displayInfo:Bool = true
         //var frameNum = 1
@@ -237,41 +258,105 @@ class MidiFilePlayer {
                 return false
             }
             
-            /*
-             //This code works fine. Should of course only be invocated if
-             //user asks for float data. The example below assumes 2 channels
-            if frameNum < 100 {
-                //print("Channel count: \(format.channelCount)")
-                //print("Buffer length :\(buffer.frameLength)")
-                //print("Stride: \(buffer.stride)")
-                //buffer.floatChannelData
-                if let channelData = buffer.floatChannelData {
-                    //print("Have channel data")
-                    //print(channelData[0] as! Float)
-                    let c1 = channelData.pointee
-                    //print(c1.pointee)
-                    for index in 0...511 {
-                        print("\(c1.advanced(by: 2*index).pointee)\t\(c1.advanced(by: 2*index+1).pointee)")
-                    }
-                } else {
-                    print("No channel data")
-                }
-                displayInfo = false
-            }
-            */
             
+            guard let floatChannelData = buffer.floatChannelData else {
+                print("###Error: Got no channelData")
+                return false
+            }
+            
+            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee,count:1024)
+                //for index in 0..<512 {
+                //    print("\(c[2*index])\t\(c[2*index+1])")
+                //}
+            
+            fileHandle.write(Data(buffer: c))
+
+            /*
             do {
                 try outputFile.write(from: buffer)
             } catch let error as NSError {
                 print("###Error: \(error)")
                 return false
             }
+            */
+
         }
         //print("\(audioEngine.manualRenderingSampleTime)")
         midiInstrument.auAudioUnit.deallocateRenderResources()
         audioEngine.disableManualRenderingMode()
         
+        fileHandle.closeFile()
+        
         return true
     }
+    
+    func create48k32bitFloatWavHeader(_ numFrames:UInt32) -> Data {
+        
+        let bytesPerSample:UInt16 = 4
+        let numChannels:UInt16 = 2
+        let sampleRate:UInt32 = 48000
+        
+        var intValue:UInt32 = 0
+        let intValueBuffer = UnsafeBufferPointer<UInt32>(start: &intValue, count: 1)
+        
+        var shortValue:UInt16 = 0
+        let shortValueBuffer = UnsafeBufferPointer<UInt16>(start: &shortValue, count:1)
+        
+        
+        var header = Data()
+        
+        header.append(contentsOf:"RIFF".map {$0.asciiValue!}) //ckID
+        
+        //intValue = 4+26+12+8+UInt32(bytesPerSample)*UInt32(numChannels)*numFrames
+        intValue = 4+24+8+UInt32(bytesPerSample)*UInt32(numChannels)*numFrames
+        header.append(intValueBuffer) //cksize
+        
+        header.append(contentsOf:"WAVE".map {$0.asciiValue!}) //WAVEID
+        
+        header.append(contentsOf:"fmt ".map {$0.asciiValue!}) //ckID
+        
+        intValue = 16 //Must be 18 if cbSize is included
+        header.append(intValueBuffer) //cksize
+        
+        shortValue = 3
+        header.append(shortValueBuffer) //wFormatTag
+        
+        shortValue = numChannels
+        header.append(shortValueBuffer) //nChannels
+        
+        intValue = sampleRate
+        header.append(intValueBuffer)   //nSamplesPerSec
+        
+        intValue = intValue*UInt32(bytesPerSample)*UInt32(numChannels)
+        header.append(intValueBuffer)   //nAvgBytesPerSec
+        
+        shortValue = bytesPerSample*numChannels
+        header.append(shortValueBuffer)  //nBlockAlign
+        
+        shortValue = 8*bytesPerSample
+        header.append(shortValueBuffer)  //wBitsPerSample
+        
+        /*****Left out in Ableton files*******
+         shortValue = 0
+         header.append(shortValueBuffer)  //cbSize. Not clear if it should be there.
+         
+         header.append(contentsOf:"fact".map {$0.asciiValue!}) //ckID
+         
+         intValue = 4
+         header.append(intValueBuffer) //cksize
+         
+         intValue = numFrames
+         header.append(intValueBuffer) //dwSampleLength
+         */
+        
+        header.append(contentsOf:"data".map {$0.asciiValue!}) //ckID
+        
+        intValue = UInt32(bytesPerSample)*UInt32(numChannels)*numFrames
+        header.append(intValueBuffer) //cksize
+        
+        return header
+        
+    }
+
 
 }
