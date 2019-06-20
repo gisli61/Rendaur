@@ -30,7 +30,7 @@ class MidiFilePlayer {
                 return
             }
             audioEngine.attach(midiInstrument)
-            audioEngine.connect(midiInstrument, to: audioEngine.mainMixerNode, format: nil)
+            audioEngine.connect(midiInstrument, to: audioEngine.outputNode, format: nil)
             do {
                 try audioEngine.start()
             } catch {
