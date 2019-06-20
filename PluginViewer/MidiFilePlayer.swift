@@ -121,6 +121,10 @@ class MidiFilePlayer {
     
     func render(_ outputURL:URL) -> Bool {
 
+        let bufLen:AVAudioFrameCount = 512
+        let sampleRate:Double = 48000.0
+        let channels:AVAudioChannelCount = 2
+
         guard let midiInstrument = midiInstrument else {
             print("###Error: no instrument loaded")
             return false
@@ -143,18 +147,18 @@ class MidiFilePlayer {
         midiSequencer.stop()
         audioEngine.stop()
         
-        guard let format = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatFloat32, sampleRate: 48000.0, channels: 2, interleaved: true) else {
+        guard let format = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatFloat32, sampleRate: sampleRate, channels: channels, interleaved: true) else {
             print("###Error: AVAudioFormat failed")
             return false
         }
         
-        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 512) else {
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bufLen) else {
             print("###Error: AVAudioPCMBuffer failed")
             return false
         }
         
         do {
-            try audioEngine.enableManualRenderingMode(AVAudioEngineManualRenderingMode.offline, format: format, maximumFrameCount: 512)
+            try audioEngine.enableManualRenderingMode(AVAudioEngineManualRenderingMode.offline, format: format, maximumFrameCount: bufLen)
         } catch {
             print("###Error: enableManualRenderingMode failed")
             return false
@@ -189,10 +193,12 @@ class MidiFilePlayer {
             return false
         }
         
-        let pad:TimeInterval = 1.0
+        //let pad:TimeInterval = 1.0
         
-        let lengthInFrames = (UInt32(round((lengthInSeconds+pad)*48000))/512)*512
         
+        let lengthInFrames = (UInt32(round((lengthInSeconds)*48000))/UInt32(bufLen))*UInt32(bufLen)
+        
+        print("lengthInSeconds: \(lengthInSeconds)")
         print("lengthInFrames: \(lengthInFrames)")
         
         //For testing purposes
@@ -220,14 +226,17 @@ class MidiFilePlayer {
             ] as [String : Any]
         */
         
-        //let outputURL = URL(fileURLWithPath: wavFile)
-        
-        //let fileManager = FileManager()
-        
-        //fileManager.
         
         let header=create48k32bitFloatWavHeader(lengthInFrames)
         
+        let fileManager = FileManager.default
+        
+        if !fileManager.createFile(atPath: outputURL.path, contents: nil, attributes: nil) {
+            print("###Error: could not create file")
+            return false
+        }
+        
+
         guard let fileHandle = FileHandle(forWritingAtPath: outputURL.path) else {
             print("###Error: could not create file handle")
             return false
@@ -252,7 +261,7 @@ class MidiFilePlayer {
             //frameNum += 1
             //print("\(audioEngine.manualRenderingSampleTime)")
             do {
-                try audioEngine.renderOffline(512, to: buffer)
+                try audioEngine.renderOffline(AVAudioFrameCount(bufLen), to: buffer)
             } catch {
                 print("###Error: renderOffline failed")
                 return false
@@ -264,7 +273,7 @@ class MidiFilePlayer {
                 return false
             }
             
-            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee,count:1024)
+            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee,count:Int(channels*bufLen))
                 //for index in 0..<512 {
                 //    print("\(c[2*index])\t\(c[2*index+1])")
                 //}
