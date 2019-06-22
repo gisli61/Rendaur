@@ -26,11 +26,11 @@
 		522C6A56229F439E00E43D27 /* PluginViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PluginViewer.entitlements; sourceTree = "<group>"; };
 		522C6A5C229F4E7F00E43D27 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		5252810922AB3677001E8965 /* AUViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUViewController.swift; sourceTree = "<group>"; };
-		52A1702E22BE4F13003BC34A /* readwav.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = readwav.py; path = cli/readwav.py; sourceTree = SOURCE_ROOT; };
-		52B3582A22AE6B45003D0BDF /* rendaur.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = rendaur.sh; path = cli/rendaur.sh; sourceTree = SOURCE_ROOT; };
+		52A1702E22BE4F13003BC34A /* readwav.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = readwav.py; path = Scripts/readwav.py; sourceTree = SOURCE_ROOT; };
+		52B3582A22AE6B45003D0BDF /* rendaur.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = rendaur.sh; path = Scripts/rendaur.sh; sourceTree = SOURCE_ROOT; };
 		52D9769722A877D30042A2FD /* MidiFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFilePlayer.swift; sourceTree = "<group>"; };
 		52FFF1B822B5AC7E00A6A6E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		52FFF1B922B5BEB700A6A6E0 /* als2preset.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = als2preset.py; path = cli/als2preset.py; sourceTree = SOURCE_ROOT; };
+		52FFF1B922B5BEB700A6A6E0 /* als2preset.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = als2preset.py; path = Scripts/als2preset.py; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +47,7 @@
 		522C6A40229F439C00E43D27 = {
 			isa = PBXGroup;
 			children = (
+				52A1703022BE4F59003BC34A /* Scripts */,
 				522C6A4B229F439C00E43D27 /* PluginViewer */,
 				522C6A4A229F439C00E43D27 /* Products */,
 			);
@@ -63,11 +64,8 @@
 		522C6A4B229F439C00E43D27 /* PluginViewer */ = {
 			isa = PBXGroup;
 			children = (
-				52A1702E22BE4F13003BC34A /* readwav.py */,
 				522C6A4C229F439C00E43D27 /* AppDelegate.swift */,
-				52B3582A22AE6B45003D0BDF /* rendaur.sh */,
 				52FFF1B822B5AC7E00A6A6E0 /* README.md */,
-				52FFF1B922B5BEB700A6A6E0 /* als2preset.py */,
 				522C6A4E229F439C00E43D27 /* ViewController.swift */,
 				522C6A5C229F4E7F00E43D27 /* PluginManager.swift */,
 				52D9769722A877D30042A2FD /* MidiFilePlayer.swift */,
@@ -78,6 +76,16 @@
 				522C6A56229F439E00E43D27 /* PluginViewer.entitlements */,
 			);
 			path = PluginViewer;
+			sourceTree = "<group>";
+		};
+		52A1703022BE4F59003BC34A /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				52B3582A22AE6B45003D0BDF /* rendaur.sh */,
+				52FFF1B922B5BEB700A6A6E0 /* als2preset.py */,
+				52A1702E22BE4F13003BC34A /* readwav.py */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
