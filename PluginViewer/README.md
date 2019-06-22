@@ -20,3 +20,5 @@ Can be run as a normal mac application or from command line using cli/raunder.sh
 14. Add Generic view for AU without a custom view.
 15. First buffer returned by render contains only 0. Contemplate to skip
 16. Currently the length in frames is a multiple of 512. Remove that constriction
+17. Figure out why fade in occurs at start of file for some AU and fix/find workaround.
+
