@@ -48,7 +48,7 @@ echo "###Error: Arguments missing"
 exit 1
 fi
 
-${PLUGINVIEWER}/Contents/MacOS/PluginViewer render ${MIDIFILE} ${PLUGIN} ${PRESET} ${OUTFILE}
+${PLUGINVIEWER}/Contents/MacOS/PluginViewer render "${MIDIFILE}" "${PLUGIN}" "${PRESET}" "${OUTFILE}"
 
 #It may also be an option to use osascript to interact with the program, e.g.
 #osascript -e 'tell application "PluginViewer" to run'
