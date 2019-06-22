@@ -196,7 +196,7 @@ class MidiFilePlayer {
         //let pad:TimeInterval = 1.0
         
         
-        let lengthInFrames = (UInt32(round((lengthInSeconds)*48000))/UInt32(bufLen))*UInt32(bufLen)
+        let lengthInFrames = UInt32(round((lengthInSeconds)*sampleRate))
         
         print("lengthInSeconds: \(lengthInSeconds)")
         print("lengthInFrames: \(lengthInFrames)")
@@ -260,8 +260,10 @@ class MidiFilePlayer {
         while(audioEngine.manualRenderingSampleTime<lengthInFrames) {
             //frameNum += 1
             //print("\(audioEngine.manualRenderingSampleTime)")
+            let framesToRead = UInt32(min(Int64(lengthInFrames)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
+            
             do {
-                try audioEngine.renderOffline(AVAudioFrameCount(bufLen), to: buffer)
+                try audioEngine.renderOffline(AVAudioFrameCount(framesToRead), to: buffer)
             } catch {
                 print("###Error: renderOffline failed")
                 return false
@@ -273,7 +275,7 @@ class MidiFilePlayer {
                 return false
             }
             
-            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee,count:Int(channels*bufLen))
+            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee,count:Int(channels*framesToRead))
                 //for index in 0..<512 {
                 //    print("\(c[2*index])\t\(c[2*index+1])")
                 //}
