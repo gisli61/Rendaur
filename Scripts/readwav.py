@@ -24,6 +24,11 @@ Options:
 
 """
 def main(infile,debug=False,header=False,content=True,framerange=None):
+
+    # It would be nice to read data directly from file stream rather than loading the 
+    # entire file into memory. Perhaps an approach like in 
+    # http://code.activestate.com/recipes/577610-decoding-binary-files/
+    # would do.
     f = open(infile)
     data = f.read()
     f.close()
@@ -121,8 +126,7 @@ def main(infile,debug=False,header=False,content=True,framerange=None):
     elif format == 1 and bytesPerSample==1:
         readformat = '<'+'b'*nChannels
     elif format == 1 and bytesPerSample==3:
-        #24 bit. Don't know how to handle this
-        raise Exception("Fixme. Don't know yet how to read 24 bit audio")
+        readformat = '<'+'Bh'*nChannels
     else:
         raise Exception("Unknown format")
 
@@ -156,17 +160,13 @@ def main(infile,debug=False,header=False,content=True,framerange=None):
     num_frames = stop - start
     offset += start*bytesPerSample*nChannels
 
-    #print start,stop
-    #raise SystemExit
-
     for i in xrange(num_frames):
         v = struct.unpack_from(readformat,data,offset=offset)
         offset += framesize
-        print "\t".join(str(x) for x in v)
-
-    #print readformat
-    #print datasize/8
-    #print offset
+        if bytesPerSample == 3:
+            print "\t".join(str(x) for x in [v[i]+v[i+1]<<8 for i in xrange(0,len(v),2)])
+        else:
+            print "\t".join(str(x) for x in v)
 
 if __name__ == '__main__':
     opt,args = getopt.getopt(sys.argv[1:],'HDAr:')
