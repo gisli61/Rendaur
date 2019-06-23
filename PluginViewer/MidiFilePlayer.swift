@@ -119,7 +119,7 @@ class MidiFilePlayer {
         midiSequencer.currentPositionInSeconds = 0
     }
     
-    func render(_ outputURL:URL) -> Bool {
+    func render(_ outputURL:URL,_ offset:AVAudioFrameCount = 0) -> Bool {
 
         let bufLen:AVAudioFrameCount = 512
         let sampleRate:Double = 48000.0
@@ -257,10 +257,23 @@ class MidiFilePlayer {
         //var displayInfo:Bool = true
         //var frameNum = 1
         
-        while(audioEngine.manualRenderingSampleTime<lengthInFrames) {
+        var remainingOffset = offset
+        
+        while(audioEngine.manualRenderingSampleTime+Int64(bufLen)<offset) {
+            //Skipping buffers at beginning if offset is larger than buffer size
+            do {
+                try audioEngine.renderOffline(AVAudioFrameCount(bufLen), to: buffer)
+            } catch {
+                print("###Error: renderOffline failed")
+                return false
+            }
+            remainingOffset -= bufLen
+        }
+        
+        while(audioEngine.manualRenderingSampleTime<lengthInFrames+offset) {
             //frameNum += 1
             //print("\(audioEngine.manualRenderingSampleTime)")
-            let framesToRead = UInt32(min(Int64(lengthInFrames)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
+            let framesToRead = UInt32(min(Int64(lengthInFrames+offset)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
             
             do {
                 try audioEngine.renderOffline(AVAudioFrameCount(framesToRead), to: buffer)
@@ -275,7 +288,9 @@ class MidiFilePlayer {
                 return false
             }
             
-            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee,count:Int(channels*framesToRead))
+            let c = UnsafeBufferPointer<Float>(start:floatChannelData.pointee.advanced(by: Int(remainingOffset*channels)),count:Int(channels*(framesToRead-remainingOffset)))
+            
+            remainingOffset = 0
                 //for index in 0..<512 {
                 //    print("\(c[2*index])\t\(c[2*index+1])")
                 //}

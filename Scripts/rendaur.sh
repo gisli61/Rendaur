@@ -22,7 +22,7 @@ then
 echo "Synopsis:"
 echo "    Render a midi file into a wav file using an Audio Unit and a preset"
 echo "Usage:"
-echo "    $0 <midifile> <instument> <preset> <wavfile>"
+echo "    $0 <midifile> <instument> <preset> <wavfile> [<offset>]"
 echo "    $0 -l"
 echo "    $0 [-h]"
 echo "Options:"
@@ -41,6 +41,7 @@ MIDIFILE=$1
 PLUGIN=$2
 PRESET=$3
 OUTFILE=$4
+OFFSET=$5
 
 if [ "$4" == "" ]
 then
@@ -48,7 +49,7 @@ echo "###Error: Arguments missing"
 exit 1
 fi
 
-${PLUGINVIEWER}/Contents/MacOS/PluginViewer render "${MIDIFILE}" "${PLUGIN}" "${PRESET}" "${OUTFILE}"
+${PLUGINVIEWER}/Contents/MacOS/PluginViewer render "${MIDIFILE}" "${PLUGIN}" "${PRESET}" "${OUTFILE}" ${OFFSET}
 
 #It may also be an option to use osascript to interact with the program, e.g.
 #osascript -e 'tell application "PluginViewer" to run'

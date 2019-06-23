@@ -26,16 +26,19 @@ A script that can read a wav file, inspect the header and extract a region (as a
 6. Full AppleScript support
 7. Combine play/stop button and make machine stop after song ends
 8. Enable/Disable buttons appropriately in UI
-9. Let functions in CLI report errors and stop processing on errors (if load plugin fails, there is no point to continue)
+9. Let functions in CLI report errors and stop processing on errors (if load plugin fails, there is no point to continue) (**DONE**)
 10. Create a program to extract AU presets out of ALS files (**DONE**: als2preset.py)
 11. Set menus up correctly
 12. Allow user to save current AU settings as presets
 13. Display parameters (fullparametertree) for audio units.
 14. Add Generic view for AU without a custom view.
-15. First buffer returned by render contains only 0. Contemplate to skip
+15. First buffer returned by render contains only 0. Contemplate to skip (**NOT NEEDED**. Differs by Audio Units)
 16. Currently the length in frames is a multiple of 512. Remove that constriction (**DONE**)
 17. Figure out why fade in occurs at start of file for some AU and fix/find workaround.
 18. Current maximum length is 60 sec (23MB). Allow user to override that restriction.
+19. Allow user to shift rendering by a number of frames, i.e., skipt frames at start and add at end. (**DONE**)
+20. Improve user interface of CLI tool (e.g. by rewriting in python). Have tool catch errors and exit with error.
+21. Add small pad at start of midi to get rid of potential fade-in issues.
 
 ## Boundary issues
 In relation to issue 17, it seems like the audio units have their own policies regarding the render start. There are

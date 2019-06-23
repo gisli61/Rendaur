@@ -46,10 +46,10 @@ class ViewController: NSViewController {
     }
     
     //MARK: Functions
-    func _changePlugin(_ pluginName:String) {
+    func _changePlugin(_ pluginName:String) -> Bool {
         guard let instrument = getAVAudioUnitMIDIInstrument(pluginName) else {
             print("Could not load \(pluginName)")
-            return
+            return false
         }
         //print("Loaded \(instrument.name)")
         currentInstrument = instrument
@@ -58,14 +58,14 @@ class ViewController: NSViewController {
         
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi file player!! Something serious happened")
-            return
+            return false
         }
         
         midiFilePlayer.midiInstrument = currentInstrument
-        
+        return true
     }
     
-    func _renderMidi(_ outputURL:URL) -> Bool {
+    func _renderMidi(_ outputURL:URL,_ offset:UInt32=0) -> Bool {
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi player!")
             return false
@@ -77,7 +77,7 @@ class ViewController: NSViewController {
         //midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.midiURL = currentMidiURL
         //midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
-        let success = midiFilePlayer.render(outputURL)
+        let success = midiFilePlayer.render(outputURL,offset)
         return success
     }
     
@@ -86,10 +86,10 @@ class ViewController: NSViewController {
         midiField.stringValue = midiURL.path
     }
     
-    func _selectPreset(_ presetFile:URL) {
+    func _selectPreset(_ presetFile:URL) -> Bool {
         guard let instrument = currentInstrument else {
             print("No instrument selected! Should not be here")
-            return
+            return false
         }
         let success = loadPreset(instrument,presetFile)
         if success {
@@ -97,7 +97,9 @@ class ViewController: NSViewController {
             presetField.stringValue = presetFile.path
         } else {
             print("Couldn't load preset")
+            return false
         }
+        return true
     }
 
     //MARK: Actions
@@ -106,7 +108,7 @@ class ViewController: NSViewController {
             print("Could not pick item")
             return
         }
-        self._changePlugin(pluginName)
+        let _ = self._changePlugin(pluginName)
     }
     
     @IBAction func playMidi(_ sender:NSButton) {
@@ -158,7 +160,7 @@ class ViewController: NSViewController {
                 print("Something went wrong")
                 return
             }
-            _selectPreset(result)
+            let _ = _selectPreset(result)
         } else {
             print("User cancelled")
         }
