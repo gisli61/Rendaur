@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		522C6A49229F439C00E43D27 /* PluginViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PluginViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		522C6A49229F439C00E43D27 /* Rendaur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendaur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		522C6A4C229F439C00E43D27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		522C6A4E229F439C00E43D27 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		522C6A50229F439E00E43D27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				52A1703022BE4F59003BC34A /* Scripts */,
-				522C6A4B229F439C00E43D27 /* PluginViewer */,
+				522C6A4B229F439C00E43D27 /* Rendaur */,
 				522C6A4A229F439C00E43D27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,12 +56,12 @@
 		522C6A4A229F439C00E43D27 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				522C6A49229F439C00E43D27 /* PluginViewer.app */,
+				522C6A49229F439C00E43D27 /* Rendaur.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		522C6A4B229F439C00E43D27 /* PluginViewer */ = {
+		522C6A4B229F439C00E43D27 /* Rendaur */ = {
 			isa = PBXGroup;
 			children = (
 				522C6A4C229F439C00E43D27 /* AppDelegate.swift */,
@@ -75,7 +75,7 @@
 				522C6A55229F439E00E43D27 /* Info.plist */,
 				522C6A56229F439E00E43D27 /* PluginViewer.entitlements */,
 			);
-			path = PluginViewer;
+			path = Rendaur;
 			sourceTree = "<group>";
 		};
 		52A1703022BE4F59003BC34A /* Scripts */ = {
@@ -91,9 +91,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		522C6A48229F439C00E43D27 /* PluginViewer */ = {
+		522C6A48229F439C00E43D27 /* Rendaur */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 522C6A59229F439E00E43D27 /* Build configuration list for PBXNativeTarget "PluginViewer" */;
+			buildConfigurationList = 522C6A59229F439E00E43D27 /* Build configuration list for PBXNativeTarget "Rendaur" */;
 			buildPhases = (
 				522C6A45229F439C00E43D27 /* Sources */,
 				522C6A46229F439C00E43D27 /* Frameworks */,
@@ -103,9 +103,9 @@
 			);
 			dependencies = (
 			);
-			name = PluginViewer;
+			name = Rendaur;
 			productName = PluginViewer;
-			productReference = 522C6A49229F439C00E43D27 /* PluginViewer.app */;
+			productReference = 522C6A49229F439C00E43D27 /* Rendaur.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,7 +128,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 522C6A44229F439C00E43D27 /* Build configuration list for PBXProject "PluginViewer" */;
+			buildConfigurationList = 522C6A44229F439C00E43D27 /* Build configuration list for PBXProject "Rendaur" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -141,7 +141,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				522C6A48229F439C00E43D27 /* PluginViewer */,
+				522C6A48229F439C00E43D27 /* Rendaur */,
 			);
 		};
 /* End PBXProject section */
@@ -306,7 +306,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = PluginViewer/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Rendaur/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -324,7 +324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = PluginViewer/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Rendaur/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -339,7 +339,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		522C6A44229F439C00E43D27 /* Build configuration list for PBXProject "PluginViewer" */ = {
+		522C6A44229F439C00E43D27 /* Build configuration list for PBXProject "Rendaur" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				522C6A57229F439E00E43D27 /* Debug */,
@@ -348,7 +348,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		522C6A59229F439E00E43D27 /* Build configuration list for PBXNativeTarget "PluginViewer" */ = {
+		522C6A59229F439E00E43D27 /* Build configuration list for PBXNativeTarget "Rendaur" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				522C6A5A229F439E00E43D27 /* Debug */,
