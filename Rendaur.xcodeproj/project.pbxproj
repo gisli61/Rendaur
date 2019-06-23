@@ -23,7 +23,6 @@
 		522C6A50229F439E00E43D27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		522C6A53229F439E00E43D27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		522C6A55229F439E00E43D27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		522C6A56229F439E00E43D27 /* PluginViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PluginViewer.entitlements; sourceTree = "<group>"; };
 		522C6A5C229F4E7F00E43D27 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		5252810922AB3677001E8965 /* AUViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUViewController.swift; sourceTree = "<group>"; };
 		52A1702E22BE4F13003BC34A /* readwav.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = readwav.py; path = Scripts/readwav.py; sourceTree = SOURCE_ROOT; };
@@ -73,7 +72,6 @@
 				522C6A50229F439E00E43D27 /* Assets.xcassets */,
 				522C6A52229F439E00E43D27 /* Main.storyboard */,
 				522C6A55229F439E00E43D27 /* Info.plist */,
-				522C6A56229F439E00E43D27 /* PluginViewer.entitlements */,
 			);
 			path = Rendaur;
 			sourceTree = "<group>";
@@ -312,7 +310,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gislimasson.PluginViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gislimasson.Rendaur;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -330,7 +328,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gislimasson.PluginViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gislimasson.Rendaur;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};

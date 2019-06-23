@@ -1,6 +1,6 @@
 //
 //  MidiFilePlayer.swift
-//  PluginViewer
+//  Rendaur
 //
 //  Created by Gísli Másson on 05/06/2019.
 //  Copyright © 2019 Gísli Másson. All rights reserved.

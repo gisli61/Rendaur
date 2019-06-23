@@ -1,11 +1,11 @@
-#  PluginViewer
+#  Rendaur
 
-Can be run as a normal mac application or from command line using cli/raunder.sh
+Can be run as a normal mac application or from command line using cli/rendaur.sh
 
 ## Helper scripts
 
 ### rendaur.sh
-A script that runs the PluginViewer app from the command line and can render a single midifile using
+A script that runs the Rendaur app from the command line and can render a single midifile using
 a single audio unit with a preset into a 32-bit float wav file. Can also list the audio units that exist on the
 system
 
