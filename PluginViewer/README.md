@@ -38,7 +38,7 @@ A script that can read a wav file, inspect the header and extract a region (as a
 18. Current maximum length is 60 sec (23MB). Allow user to override that restriction.
 19. Allow user to shift rendering by a number of frames, i.e., skipt frames at start and add at end. (**DONE**)
 20. Improve user interface of CLI tool (e.g. by rewriting in python). Have tool catch errors and exit with error.
-21. Add small pad at start of midi to get rid of potential fade-in issues.
+21. Add small pad at start of midi to get rid of potential fade-in issues. (**DONE**)
 
 ## Boundary issues
 In relation to issue 17, it seems like the audio units have their own policies regarding the render start. There are

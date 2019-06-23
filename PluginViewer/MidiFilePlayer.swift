@@ -180,29 +180,43 @@ class MidiFilePlayer {
         }
         
         //print(sequencer.tracks.count)
-        var lengthInSeconds:TimeInterval = 0
+        var paddedLengthInSeconds:TimeInterval = 0
+        var originalLengthInSeconds:TimeInterval = 0
         for t in midiSequencer.tracks {
+            //Offsetting the rendering process to get rid of fade-in
+            //problems at the start
+            if t.lengthInSeconds > originalLengthInSeconds {
+                originalLengthInSeconds = t.lengthInSeconds
+            }
+            t.offsetTime = 1.0
+            t.lengthInBeats += 1.0
             //print("Track length:\(t.lengthInSeconds)")
-            if t.lengthInSeconds > lengthInSeconds {
-                lengthInSeconds = t.lengthInSeconds
+            if t.lengthInSeconds > paddedLengthInSeconds {
+                paddedLengthInSeconds = t.lengthInSeconds
             }
         }
+        let shiftInSeconds = paddedLengthInSeconds-originalLengthInSeconds
         
-        if lengthInSeconds > 60.0 {
-            print("Midi file is \(lengthInSeconds) seconds. Will not render")
+        if originalLengthInSeconds > 60.0 {
+            print("Midi file is \(originalLengthInSeconds) seconds. Will not render")
             return false
         }
         
         //let pad:TimeInterval = 1.0
         
         
-        let lengthInFrames = UInt32(round((lengthInSeconds)*sampleRate))
+        let lengthInFrames = UInt32(round(originalLengthInSeconds*sampleRate))
+        let shiftInFrames = UInt32(round(shiftInSeconds*sampleRate))
         
-        print("lengthInSeconds: \(lengthInSeconds)")
+        print("lengthInSeconds: \(originalLengthInSeconds)")
+        //print("paddedLengthInSeconds: \(paddedLengthInSeconds)")
         print("lengthInFrames: \(lengthInFrames)")
         
         //For testing purposes
         //let lengthInFrames:UInt32 = 50000
+        
+        //cannot be set to values < 0
+        //midiSequencer.currentPositionInSeconds = -1.0
         
         midiSequencer.prepareToPlay()
         
@@ -257,9 +271,10 @@ class MidiFilePlayer {
         //var displayInfo:Bool = true
         //var frameNum = 1
         
-        var remainingOffset = offset
+        let totalOffset = offset+shiftInFrames
+        var remainingOffset = totalOffset
         
-        while(audioEngine.manualRenderingSampleTime+Int64(bufLen)<offset) {
+        while(audioEngine.manualRenderingSampleTime+Int64(bufLen)<totalOffset) {
             //Skipping buffers at beginning if offset is larger than buffer size
             do {
                 try audioEngine.renderOffline(AVAudioFrameCount(bufLen), to: buffer)
@@ -270,10 +285,10 @@ class MidiFilePlayer {
             remainingOffset -= bufLen
         }
         
-        while(audioEngine.manualRenderingSampleTime<lengthInFrames+offset) {
+        while(audioEngine.manualRenderingSampleTime<lengthInFrames+totalOffset) {
             //frameNum += 1
             //print("\(audioEngine.manualRenderingSampleTime)")
-            let framesToRead = UInt32(min(Int64(lengthInFrames+offset)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
+            let framesToRead = UInt32(min(Int64(lengthInFrames+totalOffset)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
             
             do {
                 try audioEngine.renderOffline(AVAudioFrameCount(framesToRead), to: buffer)
