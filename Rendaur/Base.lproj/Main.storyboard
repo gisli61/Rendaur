@@ -809,8 +809,8 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kiD-by-HIW">
-                                <rect key="frame" x="141" y="119" width="73" height="32"/>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kiD-by-HIW">
+                                <rect key="frame" x="121" y="119" width="73" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="61" id="Xld-hd-DFU"/>
                                 </constraints>
@@ -833,6 +833,19 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="renderMidi:" target="XfG-lQ-9wD" id="ue1-dR-On9"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xNW-46-rAy">
+                                <rect key="frame" x="194" y="119" width="112" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="1Pn-y1-Z91"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Save Preset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PKO-DF-1Ih">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="savePreset:" target="XfG-lQ-9wD" id="R5f-An-dv0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -865,6 +878,7 @@
                             <constraint firstItem="cCn-0X-CV0" firstAttribute="leading" secondItem="9dT-Av-28u" secondAttribute="trailing" constant="12" symbolic="YES" id="l8X-qN-fs0"/>
                             <constraint firstItem="ZzW-Kr-l6F" firstAttribute="centerY" secondItem="WmR-iB-6Ee" secondAttribute="centerY" id="lcH-3M-ROR"/>
                             <constraint firstItem="cCn-0X-CV0" firstAttribute="top" secondItem="h85-SD-u3l" secondAttribute="bottom" constant="8" id="nCK-vx-68s"/>
+                            <constraint firstItem="xNW-46-rAy" firstAttribute="leading" secondItem="kiD-by-HIW" secondAttribute="trailing" constant="12" id="pH1-Me-Zn2"/>
                             <constraint firstItem="UBy-mg-XqR" firstAttribute="leading" secondItem="1GY-e5-oZK" secondAttribute="leading" id="pIt-BB-Xwj"/>
                             <constraint firstAttribute="trailing" secondItem="dte-tI-4BA" secondAttribute="trailing" constant="20" symbolic="YES" id="piT-Ms-7aG"/>
                             <constraint firstItem="ZzW-Kr-l6F" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="q3A-cT-HqS"/>
@@ -876,6 +890,7 @@
                         <outlet property="playMidiButton" destination="DMb-d1-HuP" id="33B-f6-tuj"/>
                         <outlet property="pluginPopup" destination="WmR-iB-6Ee" id="FQL-Xf-Ktw"/>
                         <outlet property="presetField" destination="4WG-Ae-nWK" id="69b-iN-1ta"/>
+                        <outlet property="savePresetButton" destination="xNW-46-rAy" id="7wQ-74-nmd"/>
                         <outlet property="stopButton" destination="9dT-Av-28u" id="mlQ-HF-IDs"/>
                     </connections>
                 </viewController>

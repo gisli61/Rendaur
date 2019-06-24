@@ -25,6 +25,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var pluginPopup: NSPopUpButton!
     @IBOutlet weak var playMidiButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
+    @IBOutlet weak var savePresetButton: NSButton!
     @IBOutlet weak var midiField: NSTextField!
     @IBOutlet weak var presetField: NSTextField!
     
@@ -101,7 +102,16 @@ class ViewController: NSViewController {
         }
         return true
     }
-
+    
+    func _savePreset(_ presetFile:URL) -> Bool {
+        guard let instrument = currentInstrument else {
+            print("No instrument selected! Cannot save preset")
+            return false
+        }
+        let success = writePreset(instrument, presetFile)
+        return success
+    }
+    
     //MARK: Actions
     @IBAction func changePlugin(_ sender: NSPopUpButton) {
         guard let pluginName = sender.titleOfSelectedItem else {
@@ -164,6 +174,24 @@ class ViewController: NSViewController {
         } else {
             print("User cancelled")
         }
+    }
+    
+    @IBAction func savePreset(_ sender:NSButton) {
+        let savePanel = NSSavePanel()
+        savePanel.showsTagField = false
+        savePanel.nameFieldStringValue = "out.plist"
+        
+        savePanel.begin { (result) in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                print("Get the URL")
+                guard let outputURL = savePanel.url else {
+                    print("Didn't get any url")
+                    return
+                }
+                let _ = self._savePreset(outputURL)
+            }
+        }
+
     }
     
     @IBAction func renderMidi(_ sender:NSButton) {

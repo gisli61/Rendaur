@@ -29,7 +29,7 @@ A script that can read a wav file, inspect the header and extract a region (as a
 9. Let functions in CLI report errors and stop processing on errors (if load plugin fails, there is no point to continue) (**DONE**)
 10. Create a program to extract AU presets out of ALS files (**DONE**: als2preset.py)
 11. Set menus up correctly
-12. Allow user to save current AU settings as presets
+12. Allow user to save current AU settings as presets (**DONE**)
 13. Display parameters (fullparametertree) for audio units.
 14. Add Generic view for AU without a custom view.
 15. First buffer returned by render contains only 0. Contemplate to skip (**NOT NEEDED**. Differs by Audio Units)

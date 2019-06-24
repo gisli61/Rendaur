@@ -72,6 +72,21 @@ func readState(_ plistURL:URL) -> [String:Any]? {
     
 }
 
+func writePreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile:URL) -> Bool {
+    guard let currentState = midiInstrument.auAudioUnit.fullStateForDocument else {
+        print("instrument has no state defined")
+        return false
+    }
+    do {
+        let data = try PropertyListSerialization.data(fromPropertyList: currentState, format: PropertyListSerialization.PropertyListFormat.xml, options: 0)
+        try data.write(to: presetFile, options: .atomic)
+    } catch (let err){
+        print(err.localizedDescription)
+        return false
+    }
+    return true
+}
+
 
 func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) -> Bool {
     guard let state = readState(presetFile) else {
