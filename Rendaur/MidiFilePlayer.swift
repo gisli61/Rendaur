@@ -170,6 +170,8 @@ class MidiFilePlayer {
             return false
         }
         
+        midiInstrument.auAudioUnit.isRenderingOffline = true
+        
         //Start because we stopped above
         
         do {
@@ -205,12 +207,14 @@ class MidiFilePlayer {
         //let pad:TimeInterval = 1.0
         
         
-        let lengthInFrames = UInt32(round(originalLengthInSeconds*sampleRate))
-        let shiftInFrames = UInt32(round(shiftInSeconds*sampleRate))
-        
+        let lengthInFrames   = UInt32(round(originalLengthInSeconds*sampleRate))
+        let shiftInFrames    = UInt32(round(shiftInSeconds*sampleRate))
+        let latencyInSeconds = midiInstrument.auAudioUnit.latency
+        let latencyInFrames  = UInt32(round(latencyInSeconds*sampleRate))
         print("lengthInSeconds: \(originalLengthInSeconds)")
         //print("paddedLengthInSeconds: \(paddedLengthInSeconds)")
         print("lengthInFrames: \(lengthInFrames)")
+        print("latency: \(latencyInFrames)")
         
         //For testing purposes
         //let lengthInFrames:UInt32 = 50000
