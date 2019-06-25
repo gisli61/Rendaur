@@ -119,11 +119,17 @@ class MidiFilePlayer {
         midiSequencer.currentPositionInSeconds = 0
     }
     
-    func render(_ outputURL:URL,_ offset:AVAudioFrameCount = 0) -> Bool {
+    func render(_ outputURL:URL,_ offset:AVAudioFrameCount = 0,_ writeFile:Bool = true) -> Bool {
 
         let bufLen:AVAudioFrameCount = 512
         let sampleRate:Double = 48000.0
         let channels:AVAudioChannelCount = 2
+        //FIXME: Since we are rendering twice, we cannot set this
+        //pad, as then the sequence get shifted twice
+        //However, by rendering twice, we may not need this to fix
+        //startup problems
+        let startPad:AVMusicTimeStamp = 0.0
+        let maxLength:TimeInterval = 60.0
 
         guard let midiInstrument = midiInstrument else {
             print("###Error: no instrument loaded")
@@ -190,8 +196,8 @@ class MidiFilePlayer {
             if t.lengthInSeconds > originalLengthInSeconds {
                 originalLengthInSeconds = t.lengthInSeconds
             }
-            t.offsetTime = 1.0
-            t.lengthInBeats += 1.0
+            t.offsetTime = startPad
+            t.lengthInBeats += startPad
             //print("Track length:\(t.lengthInSeconds)")
             if t.lengthInSeconds > paddedLengthInSeconds {
                 paddedLengthInSeconds = t.lengthInSeconds
@@ -199,7 +205,7 @@ class MidiFilePlayer {
         }
         let shiftInSeconds = paddedLengthInSeconds-originalLengthInSeconds
         
-        if originalLengthInSeconds > 60.0 {
+        if originalLengthInSeconds > maxLength {
             print("Midi file is \(originalLengthInSeconds) seconds. Will not render")
             return false
         }
@@ -211,10 +217,12 @@ class MidiFilePlayer {
         let shiftInFrames    = UInt32(round(shiftInSeconds*sampleRate))
         let latencyInSeconds = midiInstrument.auAudioUnit.latency
         let latencyInFrames  = UInt32(round(latencyInSeconds*sampleRate))
-        print("lengthInSeconds: \(originalLengthInSeconds)")
-        //print("paddedLengthInSeconds: \(paddedLengthInSeconds)")
-        print("lengthInFrames: \(lengthInFrames)")
-        print("latency: \(latencyInFrames)")
+        if writeFile {
+            print("lengthInSeconds: \(originalLengthInSeconds)")
+            //print("paddedLengthInSeconds: \(paddedLengthInSeconds)")
+            print("lengthInFrames: \(lengthInFrames)")
+            print("latency: \(latencyInFrames)")
+        }
         
         //For testing purposes
         //let lengthInFrames:UInt32 = 50000
@@ -222,6 +230,7 @@ class MidiFilePlayer {
         //cannot be set to values < 0
         //midiSequencer.currentPositionInSeconds = -1.0
         
+        midiSequencer.currentPositionInSeconds = 0
         midiSequencer.prepareToPlay()
         
         do {
@@ -249,18 +258,24 @@ class MidiFilePlayer {
         
         let fileManager = FileManager.default
         
-        if !fileManager.createFile(atPath: outputURL.path, contents: nil, attributes: nil) {
+        if writeFile && !fileManager.createFile(atPath: outputURL.path, contents: nil, attributes: nil) {
             print("###Error: could not create file")
             return false
         }
         
-
-        guard let fileHandle = FileHandle(forWritingAtPath: outputURL.path) else {
-            print("###Error: could not create file handle")
-            return false
+        var fileHandle:FileHandle? = nil
+        
+        if writeFile {
+            guard let fh = FileHandle(forWritingAtPath: outputURL.path) else {
+                print("###Error: could not create file handle")
+                return false
+            }
+            fileHandle = fh
         }
         
-        fileHandle.write(header)
+        if writeFile {
+            fileHandle!.write(header)
+        }
 
         /******Will do this myself, as this doesn't create float data
         let outputFile:AVAudioFile
@@ -314,7 +329,9 @@ class MidiFilePlayer {
                 //    print("\(c[2*index])\t\(c[2*index+1])")
                 //}
             
-            fileHandle.write(Data(buffer: c))
+            if writeFile {
+                fileHandle!.write(Data(buffer: c))
+            }
 
             /*
             do {
@@ -330,8 +347,10 @@ class MidiFilePlayer {
         midiInstrument.auAudioUnit.deallocateRenderResources()
         audioEngine.disableManualRenderingMode()
         
-        fileHandle.closeFile()
-        
+        if writeFile {
+            fileHandle!.closeFile()
+        }
+        midiSequencer.stop()
         return true
     }
     

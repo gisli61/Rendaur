@@ -20,7 +20,7 @@ A script that can read a wav file, inspect the header and extract a region (as a
 
 1. Check for match (manufacturer, type, subtype) with current plugin when loading presets
 2. Fix layout issues in window.
-3. play/render doesn't work after render has been run once
+3. play/render doesn't work after render has been run once (**DONE**)
 4. Allow user to specify pad at end of song (to allow for reverb etc). Default to 0.
 5. Support true float 32bit (**DONE**)
 6. Full AppleScript support

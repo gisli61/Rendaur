@@ -78,7 +78,12 @@ class ViewController: NSViewController {
         //midiFilePlayer.midiFile = "/Users/gislim/Documents/Verkefni/Code/raunder/out.mid"
         midiFilePlayer.midiURL = currentMidiURL
         //midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
+        //Rendering twice to get rid of startup problems in some instruments
+        if !midiFilePlayer.render(outputURL,offset,false) {
+            print("Rendering preflight failed")
+        }
         let success = midiFilePlayer.render(outputURL,offset)
+        
         return success
     }
     
