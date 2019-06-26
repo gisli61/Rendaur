@@ -20,6 +20,10 @@ Options:
     -o Destination for written data. If omitted in get, the preset data is
        written to the standard output. Required argument in dump"""
 
+def fail(message):
+    print "Error: %s" % message
+    raise SystemExit(1)
+
 def get_preset(xmlfile,trackIndex,outputfile):
     root = ET.parse(xmlfile).getroot()
     track = root.getchildren()[0].find('Tracks').getchildren()[trackIndex-1]
@@ -27,7 +31,7 @@ def get_preset(xmlfile,trackIndex,outputfile):
 
     bufferElement = track.find(path)
     if bufferElement == None:
-        raise Exception("No preset found for track!")
+        fail("No preset found for track!")
 
     bufferdata = "".join(bufferElement.text.strip().split())
     bufferxml = "".join(chr(int(bufferdata[i:i+2],16)) for i in range(0,len(bufferdata),2))
@@ -170,12 +174,12 @@ def cmd_dump(args):
     alsfile = args[0]
 
     if '-o' not in opt:
-        raise Exception("Error: Required argument -o missing")
+        fail("Required argument -o missing")
 
     outputfolder = opt['-o']
 
     if not os.path.exists(outputfolder) or not os.path.isdir(outputfolder):
-        raise Exception("Error: %s is not a writable folder" % outputfolder)
+        fail("%s is not a writable folder" % outputfolder)
 
     f = gzip.open(alsfile)
 
@@ -188,7 +192,7 @@ def cmd_get(args):
     opt = dict(opt)
 
     if '-n' not in opt:
-        raise Exception("Error: Required argument -n missing")
+        fail("Required argument -n missing")
 
     trackIndex = int(opt['-n'])
 
@@ -228,7 +232,7 @@ if __name__ == '__main__':
             print __version__
             raise SystemExit(0)
         else:
-            raise Exception("Error: Unknown command: %s" % command)
+            fail("Unknown command: %s" % command)
 
     if command == 'get':
         cmd_get(sys.argv[2:])
@@ -237,6 +241,6 @@ if __name__ == '__main__':
     elif command == 'dump':
         cmd_dump(sys.argv[2:])
     else:
-        raise Exception("Error: Unknown command: %s" % command)
+        fail("Error: Unknown command: %s" % command)
 
 
