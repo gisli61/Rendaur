@@ -30,7 +30,6 @@
 		52B3582A22AE6B45003D0BDF /* rendaur.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = rendaur.sh; path = Scripts/rendaur.sh; sourceTree = SOURCE_ROOT; };
 		52B5372C22C6B3D400E2B4D5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		52D9769722A877D30042A2FD /* MidiFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFilePlayer.swift; sourceTree = "<group>"; };
-		52FFF1B822B5AC7E00A6A6E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		52FFF1B922B5BEB700A6A6E0 /* als2preset.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = als2preset.py; path = Scripts/als2preset.py; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -67,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				522C6A4C229F439C00E43D27 /* AppDelegate.swift */,
-				52FFF1B822B5AC7E00A6A6E0 /* README.md */,
 				522C6A4E229F439C00E43D27 /* ViewController.swift */,
 				522C6A5C229F4E7F00E43D27 /* PluginManager.swift */,
 				52D9769722A877D30042A2FD /* MidiFilePlayer.swift */,
