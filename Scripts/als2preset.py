@@ -100,7 +100,7 @@ def dump_presets(xmlfile,outputfolder):
         bufferdata = "".join(bufferelement.text.strip().split())
         bufferxml = "".join(chr(int(bufferdata[i:i+2],16)) for i in range(0,len(bufferdata),2))
 
-        preset_info = {'plugin':pluginName,'offset':0}
+        preset_info = {'plugin':pluginName,'latency':0}
 
         json_data = json.dumps(preset_info,indent=4,separators=(',', ': '))
 
