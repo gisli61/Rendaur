@@ -29,6 +29,9 @@
 		52A1702E22BE4F13003BC34A /* readwav.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = readwav.py; path = Scripts/readwav.py; sourceTree = SOURCE_ROOT; };
 		52B3582A22AE6B45003D0BDF /* rendaur.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = rendaur.sh; path = Scripts/rendaur.sh; sourceTree = SOURCE_ROOT; };
 		52B5372C22C6B3D400E2B4D5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		52B5372D22C6E4A100E2B4D5 /* writewav.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = writewav.py; sourceTree = "<group>"; };
+		52B5372E22C6E4A100E2B4D5 /* rendermidi.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = rendermidi.py; sourceTree = "<group>"; };
+		52B5372F22C6E8AD00E2B4D5 /* rendaur.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = rendaur.py; sourceTree = "<group>"; };
 		52D9769722A877D30042A2FD /* MidiFilePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiFilePlayer.swift; sourceTree = "<group>"; };
 		52FFF1B922B5BEB700A6A6E0 /* als2preset.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = als2preset.py; path = Scripts/als2preset.py; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -80,6 +83,9 @@
 		52A1703022BE4F59003BC34A /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				52B5372F22C6E8AD00E2B4D5 /* rendaur.py */,
+				52B5372E22C6E4A100E2B4D5 /* rendermidi.py */,
+				52B5372D22C6E4A100E2B4D5 /* writewav.py */,
 				528E048C22C03CE300E14751 /* plot_array.py */,
 				52B3582A22AE6B45003D0BDF /* rendaur.sh */,
 				52FFF1B922B5BEB700A6A6E0 /* als2preset.py */,
