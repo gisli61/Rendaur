@@ -10,6 +10,7 @@ __doc__ = """Synopsis:
 
 Usage:
     rendaur.py -l
+    rendaur.py -I -i <instrument> [-p <preset>]
     rendaur.py -m <midifile> -i <instrument> -p <preset> -o <wavfile> [-O <latency>]
     rendaur.py [-h]
 
@@ -62,6 +63,17 @@ def list_instruments():
     for r in res.strip().split():
         print r
 
+def info(instrument,presetfile):
+    rendaur_path = find_rendaur()
+    arguments = [rendaur_path,"info",instrument]
+    if presetfile is not None:
+        arguments.append(presetfile)
+    try:
+        res = subprocess.check_output(arguments)
+        print res
+    except:
+        fail("Rendaur failed")
+
 def render(midifile,instrument,presetfile,wavfile,offset=None):
     rendaur_path = find_rendaur()
     assert_file_exists(midifile)
@@ -81,7 +93,7 @@ if __name__ == '__main__':
         print __doc__
         raise SystemExit
 
-    opt,args = getopt.getopt(sys.argv[1:],'hlm:i:p:o:O:')
+    opt,args = getopt.getopt(sys.argv[1:],'hlIm:i:p:o:O:')
     opt = dict(opt)
 
     if '-h' in opt:
@@ -93,6 +105,9 @@ if __name__ == '__main__':
 
     if '-l' in opt:
         list_instruments()
+    elif '-I' in opt and '-i' in opt:
+        instrument = opt['-i']
+        info(instrument,opt.get('-p'))
     elif '-m' in opt and '-i' in opt and '-p' in opt and '-o' in opt:
         midifile   = opt['-m']
         instrument = opt['-i']

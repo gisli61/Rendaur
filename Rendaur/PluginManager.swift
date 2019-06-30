@@ -38,6 +38,18 @@ func listPresets() -> [String] {
     return []
 }
 
+func pluginInfo(_ midiInstrument: AVAudioUnitMIDIInstrument) {
+    guard let parameterTree = midiInstrument.auAudioUnit.parameterTree else {
+        print("No parameter tree found")
+        return
+    }
+    //print("displayName: \(parameterTree.displayName)")
+    
+    for p in parameterTree.allParameters {
+        print("\(p.displayName) : \(p.value)")
+    }
+}
+
 func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     let anyAudioUnitDescription = AudioComponentDescription()
     let units = AVAudioUnitComponentManager.shared().components(matching: anyAudioUnitDescription)

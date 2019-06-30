@@ -117,6 +117,16 @@ class ViewController: NSViewController {
         return success
     }
     
+    func _pluginInfo() -> Bool {
+        guard let instrument = currentInstrument else {
+            print("No instrument selected! Cannot save preset")
+            return false
+        }
+
+        pluginInfo(instrument)
+        return true
+    }
+    
     //MARK: Actions
     @IBAction func changePlugin(_ sender: NSPopUpButton) {
         guard let pluginName = sender.titleOfSelectedItem else {

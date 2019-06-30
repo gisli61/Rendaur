@@ -19,6 +19,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             renderMidi(rindex)
         } else if let lindex = CommandLine.arguments.firstIndex(of: "list") {
             listPlugins(lindex)
+        } else if let iindex = CommandLine.arguments.firstIndex(of: "info") {
+            pluginInfo(iindex)
         }
 
     }
@@ -30,6 +32,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func listPlugins(_ listIndex: Int) {
         for instrumentName in listInstruments() {
             print(instrumentName)
+        }
+        NSApplication.shared.terminate(0)
+    }
+    
+    func pluginInfo(_ infoIndex: Int) {
+        guard let vc = ViewController.vc else {
+            failed("Bug: Have no viewController")
+            return
+        }
+        let plugin = CommandLine.arguments[infoIndex+1]
+        if !vc._changePlugin(plugin) {
+            failed("Could not load plugin")
+        }
+        if CommandLine.argc > infoIndex + 1 {
+            let presetFile = CommandLine.arguments[infoIndex+2]
+            let presetURL = URL(fileURLWithPath: presetFile)
+            if !vc._selectPreset(presetURL) {
+                failed("Could not load preset")
+            }
+        }
+        if !vc._pluginInfo() {
+            failed("Could not print parameters")
         }
         NSApplication.shared.terminate(0)
     }
