@@ -848,6 +848,25 @@
                                     <action selector="savePreset:" target="XfG-lQ-9wD" id="R5f-An-dv0"/>
                                 </connections>
                             </button>
+                            <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnw-wP-XJ5">
+                                <rect key="frame" x="260" y="11" width="28" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <sliderCell key="cell" alignment="left" maxValue="127" doubleValue="28.368381459077607" sliderType="circular" id="u17-uh-SN4">
+                                    <connections>
+                                        <action selector="sentControllerMessage:" target="XfG-lQ-9wD" id="4B7-70-uCK"/>
+                                    </connections>
+                                </sliderCell>
+                            </slider>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gph-Zf-g3k">
+                                <rect key="frame" x="294" y="14" width="29" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="101" drawsBackground="YES" id="NA8-wA-LxL">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="E6o-Gf-Rag"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="UBy-mg-XqR" firstAttribute="bottom" secondItem="4WG-Ae-nWK" secondAttribute="bottom" id="1gF-Eh-0t3"/>
@@ -886,6 +905,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="contollerKnob" destination="u17-uh-SN4" id="TcA-N9-7vj"/>
+                        <outlet property="controllerField" destination="gph-Zf-g3k" id="qwq-Dz-DD4"/>
                         <outlet property="midiField" destination="h85-SD-u3l" id="pn3-Of-um4"/>
                         <outlet property="playMidiButton" destination="DMb-d1-HuP" id="33B-f6-tuj"/>
                         <outlet property="pluginPopup" destination="WmR-iB-6Ee" id="FQL-Xf-Ktw"/>

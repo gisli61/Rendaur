@@ -28,6 +28,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var savePresetButton: NSButton!
     @IBOutlet weak var midiField: NSTextField!
     @IBOutlet weak var presetField: NSTextField!
+    @IBOutlet weak var contollerKnob: NSSliderCell!
+    @IBOutlet weak var controllerField: NSTextField!
     
     //MARK: Methods
     override func viewDidLoad() {
@@ -285,6 +287,16 @@ class ViewController: NSViewController {
         }
         
         auWindowController.showWindow(nil)
+    }
+    
+    @IBAction func sentControllerMessage(_ sender:NSSliderCell) {
+        print("Controller:\(controllerField.intValue), value:\(sender.intValue)")
+        guard let instrument = currentInstrument else {
+            return
+        }
+        let controller = UInt8(controllerField.intValue)
+        let value = UInt8(sender.intValue)
+        instrument.sendController(controller, withValue: value, onChannel: 0)
     }
 
 }
