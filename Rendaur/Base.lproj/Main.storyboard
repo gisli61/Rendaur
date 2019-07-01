@@ -851,7 +851,7 @@
                             <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnw-wP-XJ5">
                                 <rect key="frame" x="260" y="11" width="28" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <sliderCell key="cell" alignment="left" maxValue="127" doubleValue="28.368381459077607" sliderType="circular" id="u17-uh-SN4">
+                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="127" doubleValue="102.94698896640521" sliderType="circular" id="u17-uh-SN4">
                                     <connections>
                                         <action selector="sentControllerMessage:" target="XfG-lQ-9wD" id="4B7-70-uCK"/>
                                     </connections>

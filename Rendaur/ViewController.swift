@@ -289,14 +289,21 @@ class ViewController: NSViewController {
         auWindowController.showWindow(nil)
     }
     
+    var prevValue:UInt8 = 128
+    
     @IBAction func sentControllerMessage(_ sender:NSSliderCell) {
-        print("Controller:\(controllerField.intValue), value:\(sender.intValue)")
-        guard let instrument = currentInstrument else {
-            return
-        }
         let controller = UInt8(controllerField.intValue)
         let value = UInt8(sender.intValue)
-        instrument.sendController(controller, withValue: value, onChannel: 0)
+        if value == prevValue {
+            return
+        }
+        prevValue = value
+        
+        if let instrument = currentInstrument {
+            instrument.sendController(controller, withValue: value, onChannel: 0)
+        } else {
+            print("controller: \(controller), value: \(value)")
+        }
     }
 
 }
