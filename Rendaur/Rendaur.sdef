@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="Rendaur Terminology">
+    <suite name="Rendaur Scripting Suite" code="RndR" description="Standard suite for application communication.">
+        <command name="list" code="RndRList" description="List plugins">
+            <cocoa class="Rendaur.ListScriptCommand"/>
+            <parameter name="in" code="Fpat" type="text" description="The file path in which to save the document.">
+                <cocoa key="FilePath"/>
+            </parameter>
+            <result type="text" description="Echoes back the filepath supplied."/>
+        </command>
+
+        <command name="render" code="RndRRndr" description="Render midi file">
+            <cocoa class="Rendaur.RenderScriptCommand"/>
+            <parameter type="file" description="The midi file to Render.">
+                <cocoa key="MidiPath"/>
+            </parameter>
+            <parameter name="with" code="Pgin" type="text" description="The plugin to use">
+                <cocoa key="Plugin"/>
+            </parameter>
+            <parameter name="using" code="Pset" type="file" description="The preset to use">
+                <cocoa key="Preset"/>
+            </parameter>
+            <parameter name="into" code="Wfle" type="file" description="The wav file to create">
+                <cocoa key="Wav"/>
+            </parameter>
+            <result type="text" description="The result"/>
+        </command>
+
+    </suite>
+</dictionary>
+

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5212F66C22CD4EC5009F07EF /* ScriptingClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5212F66B22CD4EC5009F07EF /* ScriptingClasses.swift */; };
+		5212F66E22CD4FD8009F07EF /* Rendaur.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 5212F66D22CD4FD8009F07EF /* Rendaur.sdef */; };
 		522C6A4D229F439C00E43D27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C6A4C229F439C00E43D27 /* AppDelegate.swift */; };
 		522C6A4F229F439C00E43D27 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C6A4E229F439C00E43D27 /* ViewController.swift */; };
 		522C6A51229F439E00E43D27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 522C6A50229F439E00E43D27 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5212F66B22CD4EC5009F07EF /* ScriptingClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptingClasses.swift; sourceTree = "<group>"; };
+		5212F66D22CD4FD8009F07EF /* Rendaur.sdef */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rendaur.sdef; sourceTree = "<group>"; };
 		522C6A49229F439C00E43D27 /* Rendaur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendaur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		522C6A4C229F439C00E43D27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		522C6A4E229F439C00E43D27 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,9 +77,11 @@
 				522C6A5C229F4E7F00E43D27 /* PluginManager.swift */,
 				52D9769722A877D30042A2FD /* MidiFilePlayer.swift */,
 				5252810922AB3677001E8965 /* AUViewController.swift */,
+				5212F66B22CD4EC5009F07EF /* ScriptingClasses.swift */,
 				522C6A50229F439E00E43D27 /* Assets.xcassets */,
 				522C6A52229F439E00E43D27 /* Main.storyboard */,
 				522C6A55229F439E00E43D27 /* Info.plist */,
+				5212F66D22CD4FD8009F07EF /* Rendaur.sdef */,
 			);
 			path = Rendaur;
 			sourceTree = "<group>";
@@ -159,6 +165,7 @@
 			files = (
 				522C6A51229F439E00E43D27 /* Assets.xcassets in Resources */,
 				522C6A54229F439E00E43D27 /* Main.storyboard in Resources */,
+				5212F66E22CD4FD8009F07EF /* Rendaur.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +178,7 @@
 			files = (
 				522C6A4F229F439C00E43D27 /* ViewController.swift in Sources */,
 				522C6A4D229F439C00E43D27 /* AppDelegate.swift in Sources */,
+				5212F66C22CD4EC5009F07EF /* ScriptingClasses.swift in Sources */,
 				52D9769822A877D30042A2FD /* MidiFilePlayer.swift in Sources */,
 				522C6A5D229F4E7F00E43D27 /* PluginManager.swift in Sources */,
 				5252810A22AB3677001E8965 /* AUViewController.swift in Sources */,
