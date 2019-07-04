@@ -4,6 +4,11 @@
     
     <suite name="Rendaur Scripting Suite" code="RndR" description="Standard suite for application communication.">
         
+        <command name="list plugins" code="RndRList" description="List plugins">
+            <cocoa class="Rendaur.ListScriptCommand"/>
+            <result type="text" description="The result"/>
+        </command>
+
         <command name="load plugin" code="RndRLoad" description="Load Plugin">
             <cocoa class="Rendaur.LoadPluginScriptCommand"/>
             <direct-parameter type="text" description="The plugin to be loaded"/>
@@ -11,9 +16,11 @@
             <result type="boolean" description="The plugin was loaded"/>
         </command>
         
-        <command name="list plugins" code="RndRList" description="List plugins">
-            <cocoa class="Rendaur.ListScriptCommand"/>
-            <result type="text" description="The result"/>
+        <command name="load preset" code="RndRLdpr" description="Load preset file">
+            <cocoa class="Rendaur.LoadPresetScriptCommand"/>
+            <direct-parameter type="file" description="The preset to be loaded"/>
+            
+            <result type="boolean" description="The preset was loaded"/>
         </command>
 
     </suite>

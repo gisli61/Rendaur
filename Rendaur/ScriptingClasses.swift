@@ -50,7 +50,27 @@ class LoadPluginScriptCommand: NSScriptCommand {
             return false
         }
         let pluginName = self.directParameter as! String
+        
+        //FIXME: change isn't reflected in popupButton
         let success = vc._changePlugin(pluginName)
+        return success
+    }
+}
+
+class LoadPresetScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            return false
+        }
+        
+        if vc.currentInstrument == nil {
+            print("no plugin loaded")
+            return false
+        }
+        
+        //CHECK: Cannot use ~ in pathname.
+        let presetFile = self.directParameter as! URL
+        let success = vc._selectPreset(presetFile)
         return success
     }
 }
