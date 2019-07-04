@@ -44,7 +44,7 @@ class RenderScriptCommand: NSScriptCommand {
     }
 }
 
-class LoadScriptCommand: NSScriptCommand {
+class LoadPluginScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
             return false

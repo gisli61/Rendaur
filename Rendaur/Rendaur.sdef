@@ -4,19 +4,15 @@
     
     <suite name="Rendaur Scripting Suite" code="RndR" description="Standard suite for application communication.">
         
-        <command name="load" code="RndRLoad" description="List plugins">
-            <cocoa class="Rendaur.LoadScriptCommand"/>
-            <direct-parameter type="text" description="The plugin to be loaded">
-                <cocoa key="PluginName"/>
-            </direct-parameter>
+        <command name="load plugin" code="RndRLoad" description="Load Plugin">
+            <cocoa class="Rendaur.LoadPluginScriptCommand"/>
+            <direct-parameter type="text" description="The plugin to be loaded"/>
+            
             <result type="boolean" description="The plugin was loaded"/>
         </command>
         
-        <command name="list" code="RndRList" description="List plugins">
+        <command name="list plugins" code="RndRList" description="List plugins">
             <cocoa class="Rendaur.ListScriptCommand"/>
-            <parameter name="in" code="Fpat" type="text" description="The file path in which to save the document.">
-                <cocoa key="FilePath"/>
-            </parameter>
             <result type="text" description="The result"/>
         </command>
 
