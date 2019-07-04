@@ -75,6 +75,22 @@ class LoadPresetScriptCommand: NSScriptCommand {
     }
 }
 
+class LoadMidiScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            return false
+        }
+
+        //CHECK: Cannot use ~ in pathname.
+        let midiFile = self.directParameter as! URL
+        if !midiFile.isFileURL {
+            return false
+        }
+        vc._selectMidi(midiFile)
+        return true
+    }
+}
+
 /*
  
  Objects in application:

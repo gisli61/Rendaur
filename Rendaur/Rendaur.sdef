@@ -23,6 +23,13 @@
             <result type="boolean" description="The preset was loaded"/>
         </command>
 
+        <command name="load midi" code="RndRLdmd" description="Load midi file">
+            <cocoa class="Rendaur.LoadMidiScriptCommand"/>
+            <direct-parameter type="file" description="The midi file to be loaded"/>
+            
+            <result type="boolean" description="The midi file was loaded"/>
+        </command>
+
     </suite>
     
 </dictionary>
