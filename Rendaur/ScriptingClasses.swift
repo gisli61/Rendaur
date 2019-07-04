@@ -22,6 +22,9 @@ import Foundation
 //Info on sdef:
 // https://www.shadowlab.org/softwares/SdefEditor/sdef-format.html#DirectParameter
 
+// The standard suite can be found in
+// /System/Library/ScriptingDefinitions/CocoaStandard.sdef
+
 class ListScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         var reply = ""
@@ -38,6 +41,17 @@ class ListScriptCommand: NSScriptCommand {
 class RenderScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         return "rendering"
+    }
+}
+
+class LoadScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            return false
+        }
+        let pluginName = self.directParameter as! String
+        let success = vc._changePlugin(pluginName)
+        return success
     }
 }
 
