@@ -38,12 +38,6 @@ class ListScriptCommand: NSScriptCommand {
     }
 }
 
-class RenderScriptCommand: NSScriptCommand {
-    override func performDefaultImplementation() -> Any? {
-        return "rendering"
-    }
-}
-
 class LoadPluginScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
@@ -88,6 +82,38 @@ class LoadMidiScriptCommand: NSScriptCommand {
         }
         vc._selectMidi(midiFile)
         return true
+    }
+}
+
+class RenderScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            return false
+        }
+        
+        guard let arguments = self.evaluatedArguments else {
+            return false
+        }
+        
+        guard let wavFile = arguments["WavFilePath"] as? URL else {
+            return false
+        }
+        
+        if !wavFile.isFileURL {
+            return false
+        }
+
+        let offset = arguments["Offset"] as? UInt32
+        
+        var success:Bool = false
+        if let offset = offset {
+            print("Got offset \(offset)")
+            success = vc._renderMidi(wavFile, offset)
+        } else {
+            success = vc._renderMidi(wavFile)
+        }
+        
+        return success
     }
 }
 
