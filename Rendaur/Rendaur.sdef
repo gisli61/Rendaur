@@ -12,22 +12,16 @@
         <command name="load plugin" code="RndRLoad" description="Load Plugin">
             <cocoa class="Rendaur.LoadPluginScriptCommand"/>
             <direct-parameter type="text" description="The plugin to be loaded"/>
-            
-            <result type="boolean" description="The plugin was loaded"/>
         </command>
         
         <command name="load preset" code="RndRLdpr" description="Load preset file">
             <cocoa class="Rendaur.LoadPresetScriptCommand"/>
             <direct-parameter type="file" description="The preset to be loaded"/>
-            
-            <result type="boolean" description="The preset was loaded"/>
         </command>
 
         <command name="load midi" code="RndRLdmd" description="Load midi file">
             <cocoa class="Rendaur.LoadMidiScriptCommand"/>
             <direct-parameter type="file" description="The midi file to be loaded"/>
-            
-            <result type="boolean" description="The midi file was loaded"/>
         </command>
         
         <command name="render" code="RndRRndr" description="Render the loaded midi file">
@@ -38,8 +32,12 @@
             <parameter name="with offset" code="Ofst" type="integer" optional="yes" description="The offset to use">
                 <cocoa key="Offset"/>
             </parameter>
+        </command>
+        
+        <command name="get info" code="RndRInfo" description="Get info for the current plugin">
+            <cocoa class="Rendaur.InfoScriptCommand"/>
             
-            <result type="boolean" description="The wav file was created"/>
+            <result type="text" description="The full parameter info for the plugin"/>
         </command>
 
     </suite>

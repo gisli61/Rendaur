@@ -28,10 +28,12 @@ import Foundation
 class ListScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         var reply = ""
-
+        
+        var sep = ""
         for instrumentName in listInstruments() {
+            reply.append(sep)
+            sep = ","
             reply.append(contentsOf: instrumentName)
-            reply.append(contentsOf: ",")
         }
 
         return reply
@@ -41,7 +43,9 @@ class ListScriptCommand: NSScriptCommand {
 class LoadPluginScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
-            return false
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
         }
         let pluginName = self.directParameter as! String
         
@@ -54,66 +58,110 @@ class LoadPluginScriptCommand: NSScriptCommand {
 class LoadPresetScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
-            return false
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
         }
         
         if vc.currentInstrument == nil {
-            print("no plugin loaded")
-            return false
+            scriptErrorString = "No plugin loaded"
+            scriptErrorNumber = 1003
+            return nil
         }
         
         //CHECK: Cannot use ~ in pathname.
-        let presetFile = self.directParameter as! URL
+        
+        guard let presetFile = self.directParameter as? URL else {
+            scriptErrorString = "Could not preset path parameter"
+            scriptErrorNumber = 1004
+            return nil
+        }
         let success = vc._selectPreset(presetFile)
-        return success
+        if !success {
+            scriptErrorString = "Could not load preset. Has plugin been loaded?"
+            scriptErrorNumber = 1005
+            return nil
+        }
+        return nil
     }
 }
 
 class LoadMidiScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
-            return false
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
         }
 
         //CHECK: Cannot use ~ in pathname.
-        let midiFile = self.directParameter as! URL
-        if !midiFile.isFileURL {
-            return false
+        guard let midiFile = self.directParameter as? URL else {
+            scriptErrorString = "Could not read midi path parameter"
+            scriptErrorNumber = 1006
+            return nil
         }
+        
+        //Should double check if file loads properly
         vc._selectMidi(midiFile)
-        return true
+        return nil
     }
 }
 
 class RenderScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
-            return false
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
         }
         
         guard let arguments = self.evaluatedArguments else {
-            return false
+            scriptErrorString = "Unknown error. Got no arguments"
+            scriptErrorNumber = 1007
+            return nil
         }
         
         guard let wavFile = arguments["WavFilePath"] as? URL else {
-            return false
-        }
-        
-        if !wavFile.isFileURL {
-            return false
+            scriptErrorString = "Could not wav file path parameter"
+            scriptErrorNumber = 1008
+            return nil
         }
 
         let offset = arguments["Offset"] as? UInt32
         
         var success:Bool = false
+        
         if let offset = offset {
-            print("Got offset \(offset)")
+            //print("Got offset \(offset)")
             success = vc._renderMidi(wavFile, offset)
         } else {
             success = vc._renderMidi(wavFile)
         }
         
-        return success
+        if !success {
+            scriptErrorString = "Unknown error. Rendering failed"
+            scriptErrorNumber = 1009
+            return nil
+        }
+        return nil
+    }
+}
+
+class InfoScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
+        }
+        
+        guard let instrument = vc.currentInstrument else {
+            scriptErrorString = "No plugin selected. Cannot get info"
+            scriptErrorNumber = 1002
+            return nil
+        }
+
+        return getPluginInfo(instrument)
     }
 }
 
