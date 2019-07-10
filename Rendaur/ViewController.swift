@@ -23,13 +23,18 @@ class ViewController: NSViewController {
 
     //MARK: Outlets
     @IBOutlet weak var pluginPopup: NSPopUpButton!
+    @IBOutlet weak var openPluginButton: NSButton!
+    @IBOutlet weak var savePresetButton: NSButton!
+    @IBOutlet weak var presetField: NSTextField!
+    @IBOutlet weak var selectPresetButton: NSButton!
+    @IBOutlet weak var midiField: NSTextField!
+    @IBOutlet weak var selectMidiButton: NSButton!
     @IBOutlet weak var playMidiButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
-    @IBOutlet weak var savePresetButton: NSButton!
-    @IBOutlet weak var midiField: NSTextField!
-    @IBOutlet weak var presetField: NSTextField!
-    @IBOutlet weak var contollerKnob: NSSliderCell!
+    @IBOutlet weak var renderButton: NSButton!
     @IBOutlet weak var controllerField: NSTextField!
+    @IBOutlet weak var contollerKnob: NSSliderCell!
+    
     
     //MARK: Methods
     override func viewDidLoad() {
@@ -63,8 +68,11 @@ class ViewController: NSViewController {
             print("No midi file player!! Something serious happened")
             return false
         }
-        
+        pluginPopup.selectItem(withTitle: pluginName)
         midiFilePlayer.midiInstrument = currentInstrument
+        openPluginButton.isEnabled = true
+        savePresetButton.isEnabled = true
+        selectPresetButton.isEnabled = true
         return true
     }
     
@@ -92,6 +100,9 @@ class ViewController: NSViewController {
     func _selectMidi(_ midiURL:URL) {
         currentMidiURL = midiURL
         midiField.stringValue = midiURL.path
+        playMidiButton.isEnabled = true
+        stopButton.isEnabled = true
+        renderButton.isEnabled = true
     }
     
     func _selectPreset(_ presetFile:URL) -> Bool {
