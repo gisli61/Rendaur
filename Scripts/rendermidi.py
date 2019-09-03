@@ -62,7 +62,10 @@ def main(presetdir,mididir,debug=False,rendaur="rendaur.sh"):
         plugininfo = json.loads(f.read())
         f.close()
         plugin = plugininfo["plugin"]
-        offset = int(plugininfo["offset"])
+        if "offset" in plugininfo:
+            offset = int(plugininfo["offset"])
+        else:
+            offset = 0
         if offset == 0: 
             offset = ""
         else:
