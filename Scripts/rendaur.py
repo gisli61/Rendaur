@@ -31,6 +31,9 @@ Options:
 # want to allow user to preload instrument and preset and then just render
 # various midi files. E.g. if user is modifying the settings from user interface
 
+#TODO: Look at https://stackoverflow.com/questions/16065162/calling-applescript-from-python-without-using-osascript-or-appscript
+# to avoid system calls when using applescript.
+
 def fail(message):
     print "Error: %s" % message
     raise SystemExit(1)
