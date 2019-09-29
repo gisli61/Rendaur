@@ -16,6 +16,7 @@ class ViewController: NSViewController {
     
     //MARK: Properties
     var currentInstrument:AVAudioUnitMIDIInstrument?
+    var currentEffect:AVAudioUnitEffect?
     var currentMidiURL:URL?
     var currentPresetURL:URL?
     private var midiFilePlayer:MidiFilePlayer?
@@ -23,7 +24,9 @@ class ViewController: NSViewController {
 
     //MARK: Outlets
     @IBOutlet weak var pluginPopup: NSPopUpButton!
+    @IBOutlet weak var effectPopup: NSPopUpButton!
     @IBOutlet weak var openPluginButton: NSButton!
+    @IBOutlet weak var openEffectButton: NSButton!
     @IBOutlet weak var savePresetButton: NSButton!
     @IBOutlet weak var presetField: NSTextField!
     @IBOutlet weak var selectPresetButton: NSButton!
@@ -50,6 +53,10 @@ class ViewController: NSViewController {
         for x in listPresets() {
             pluginPopup.addItem(withTitle: x)
         }
+        effectPopup.addItem(withTitle: "Select effect...")
+        for x in listEffects() {
+            effectPopup.addItem(withTitle: x)
+        }
         ViewController.vc = self
     }
     
@@ -73,6 +80,23 @@ class ViewController: NSViewController {
         openPluginButton.isEnabled = true
         savePresetButton.isEnabled = true
         selectPresetButton.isEnabled = true
+        return true
+    }
+    
+    func _changeEffect(_ effectName:String) -> Bool {
+        guard let effect = getAVAudioUnitEffect(effectName) else {
+            print("Could not load \(effectName)")
+            return false
+        }
+        //print("Loaded \(instrument.name)")
+        currentEffect = effect
+        currentPresetURL = nil
+        presetField.stringValue = ""
+        
+        effectPopup.selectItem(withTitle: effectName)
+        openEffectButton.isEnabled = true
+        //savePresetButton.isEnabled = true
+        //selectPresetButton.isEnabled = true
         return true
     }
     
@@ -149,6 +173,14 @@ class ViewController: NSViewController {
         let _ = self._changePlugin(pluginName)
     }
     
+    @IBAction func changeEffect(_ sender: NSPopUpButton) {
+        guard let effectName = sender.titleOfSelectedItem else {
+            print("Could not pick item")
+            return
+        }
+        let _ = self._changeEffect(effectName)
+    }
+
     @IBAction func playMidi(_ sender:NSButton) {
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi player!")
@@ -299,7 +331,43 @@ class ViewController: NSViewController {
         
         auWindowController.showWindow(nil)
     }
-    
+
+    @IBAction func openEffectWindow(_ sender: NSButton) {
+        
+        guard let current = currentEffect else {
+            print("no plugin selected!")
+            return
+        }
+        
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        let auWindowController = storyboard.instantiateController(withIdentifier: "AU Window Controller") as! NSWindowController
+        
+        guard let auName = current.auAudioUnit.audioUnitName else {
+            print("Found no name!")
+            return
+        }
+        
+        guard let auWindow = auWindowController.window else {
+            print("No window!")
+            return
+        }
+        
+        auWindow.title=auName
+        auWindow.delegate=self
+        
+        current.auAudioUnit.requestViewController() { nsViewController in
+            guard let vc = nsViewController else {
+                print("viewController is nil")
+                return
+            }
+            
+            auWindowController.contentViewController = vc
+            
+        }
+        
+        auWindowController.showWindow(nil)
+    }
+
     var prevValue:UInt8 = 128
     
     @IBAction func sentControllerMessage(_ sender:NSSliderCell) {

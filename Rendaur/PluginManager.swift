@@ -12,20 +12,36 @@ import AVFoundation
 func listInstruments() -> [String] {
     var instruments:[String] = []
     
-    let anyAudioUnitDescription = AudioComponentDescription()
+    let anyAudioUnitDescription = AudioComponentDescription(componentType:kAudioUnitType_MusicDevice,
+                                                            componentSubType: 0,
+                                                            componentManufacturer: 0,
+                                                            componentFlags: 0,
+                                                            componentFlagsMask: 0)
     
     let units = AVAudioUnitComponentManager.shared().components(matching: anyAudioUnitDescription)
     
     for x in units {
-        //if x.hasMIDIInput && x.hasCustomView {
-        //    instruments.append(x.name)
-        //}
-        if x.hasMIDIInput {
-            instruments.append(x.name)
-        }
+        instruments.append(x.name)
     }
 
     return instruments
+}
+
+func listEffects() -> [String] {
+    var effects:[String] = []
+    
+    let effectAudioUnitDescription = AudioComponentDescription(componentType:kAudioUnitType_Effect,
+                                                               componentSubType: 0,
+                                                               componentManufacturer: 0,
+                                                               componentFlags: 0,
+                                                               componentFlagsMask: 0)
+    
+    let units = AVAudioUnitComponentManager.shared().components(matching: effectAudioUnitDescription)
+    for x in units {
+        effects.append(x.name)
+    }
+
+    return effects
 }
 
 func listPresets() -> [String] {
@@ -179,4 +195,35 @@ func getAVAudioUnitMIDIInstrument(_ name:String) -> AVAudioUnitMIDIInstrument? {
     }
     
     return midiInstrument
+}
+
+func getAVAudioUnitEffect(_ name:String) -> AVAudioUnitEffect? {
+    let plugin:String
+    
+    let state:[String:Any]? = nil
+    //let state = readState(name)
+    
+    if state != nil {
+        //pluginName = String(plugin.split(separator:"_")[0])
+        guard let fileName = name.split(separator:"/").last else {
+            print("###:Error: Could not figure out filename")
+            return nil
+        }
+        plugin = String(fileName.split(separator:"_")[0])
+    } else {
+        plugin = name
+    }
+    
+    guard let description = getAudioComponentDescription(name:plugin) else {
+        print("###Error: Could not get \(plugin) description")
+        return nil
+    }
+    
+    let effect = AVAudioUnitEffect(audioComponentDescription: description)
+    
+    if state != nil {
+        effect.auAudioUnit.fullStateForDocument = state
+    }
+    
+    return effect
 }
