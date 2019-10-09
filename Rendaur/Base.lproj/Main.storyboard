@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -728,7 +728,7 @@
                                                             <rect key="frame" x="0.0" y="193" width="364" height="21"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZzW-Kr-l6F">
-                                                                    <rect key="frame" x="-2" y="4" width="49" height="17"/>
+                                                                    <rect key="frame" x="-2" y="5" width="49" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="u8J-b6-gsS"/>
                                                                     </constraints>
@@ -793,7 +793,7 @@
                                                             <rect key="frame" x="0.0" y="62" width="364" height="123"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UBy-mg-XqR">
-                                                                    <rect key="frame" x="-2" y="106" width="49" height="17"/>
+                                                                    <rect key="frame" x="-2" y="107" width="49" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="90d-sy-1OF"/>
                                                                     </constraints>
@@ -804,7 +804,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4WG-Ae-nWK">
-                                                                    <rect key="frame" x="53" y="101" width="193" height="22"/>
+                                                                    <rect key="frame" x="53" y="102" width="193" height="21"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="nqK-t8-P9R">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -840,7 +840,7 @@
                                                             <rect key="frame" x="0.0" y="32" width="364" height="22"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1GY-e5-oZK">
-                                                                    <rect key="frame" x="-2" y="5" width="49" height="17"/>
+                                                                    <rect key="frame" x="-2" y="6" width="49" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="diX-d6-7Wa"/>
                                                                     </constraints>
@@ -851,7 +851,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h85-SD-u3l">
-                                                                    <rect key="frame" x="53" y="0.0" width="193" height="22"/>
+                                                                    <rect key="frame" x="53" y="1" width="193" height="21"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="XKr-M4-tku">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -926,7 +926,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gph-Zf-g3k">
-                                                                    <rect key="frame" x="264" y="2" width="60" height="22"/>
+                                                                    <rect key="frame" x="264" y="3" width="60" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="60" id="OMF-mn-eKY"/>
                                                                     </constraints>
@@ -1023,10 +1023,47 @@
                                                         <action selector="openEffectWindow:" target="XfG-lQ-9wD" id="asE-gf-zSr"/>
                                                     </connections>
                                                 </button>
+                                                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0xg-wD-sDy">
+                                                    <rect key="frame" x="60" y="116" width="84" height="32"/>
+                                                    <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iMT-tg-fHQ">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="playWav:" target="XfG-lQ-9wD" id="3BY-77-kT5"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lkM-KX-JDD">
+                                                    <rect key="frame" x="66" y="164" width="186" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="186" id="Erq-4S-iRG"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="a4y-3a-wk2">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0EV-x4-YvC">
+                                                    <rect key="frame" x="254" y="157" width="108" height="32"/>
+                                                    <buttonCell key="cell" type="push" title="Select Wav" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xte-eS-5C2">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="selectWav:" target="XfG-lQ-9wD" id="r36-aH-aZ4"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="0xg-wD-sDy" firstAttribute="top" secondItem="lkM-KX-JDD" secondAttribute="bottom" constant="20" id="5I2-w4-HFe"/>
+                                                <constraint firstItem="lkM-KX-JDD" firstAttribute="leading" secondItem="0xg-wD-sDy" secondAttribute="leading" id="EgU-L7-qjG"/>
                                                 <constraint firstItem="aYb-Ty-fCX" firstAttribute="top" secondItem="tti-2d-ENU" secondAttribute="top" constant="21" id="FXm-5l-qOP"/>
+                                                <constraint firstItem="lkM-KX-JDD" firstAttribute="baseline" secondItem="0EV-x4-YvC" secondAttribute="baseline" id="HWK-fW-hC6"/>
+                                                <constraint firstItem="lkM-KX-JDD" firstAttribute="top" secondItem="aYb-Ty-fCX" secondAttribute="bottom" constant="27" id="KpA-bj-eHK"/>
+                                                <constraint firstItem="0EV-x4-YvC" firstAttribute="leading" secondItem="lkM-KX-JDD" secondAttribute="trailing" constant="8" symbolic="YES" id="TWo-2f-tO3"/>
                                                 <constraint firstItem="aYb-Ty-fCX" firstAttribute="leading" secondItem="tti-2d-ENU" secondAttribute="leading" constant="66" id="oBY-Wj-flw"/>
+                                                <constraint firstItem="lkM-KX-JDD" firstAttribute="leading" secondItem="aYb-Ty-fCX" secondAttribute="leading" id="slk-Pa-UYN"/>
                                             </constraints>
                                         </view>
                                     </tabViewItem>
@@ -1047,14 +1084,18 @@
                         <outlet property="midiField" destination="h85-SD-u3l" id="pn3-Of-um4"/>
                         <outlet property="openEffectButton" destination="c6O-4d-nRx" id="Pri-q6-ZK5"/>
                         <outlet property="openPluginButton" destination="kiD-by-HIW" id="cgK-4E-s4I"/>
+                        <outlet property="playAudioButton" destination="0xg-wD-sDy" id="8hh-gt-JSS"/>
                         <outlet property="playMidiButton" destination="DMb-d1-HuP" id="33B-f6-tuj"/>
+                        <outlet property="playWavButton" destination="0xg-wD-sDy" id="vkm-mI-zgY"/>
                         <outlet property="pluginPopup" destination="WmR-iB-6Ee" id="FQL-Xf-Ktw"/>
                         <outlet property="presetField" destination="4WG-Ae-nWK" id="69b-iN-1ta"/>
                         <outlet property="renderButton" destination="cCn-0X-CV0" id="zZr-Qj-5OM"/>
                         <outlet property="savePresetButton" destination="xNW-46-rAy" id="7wQ-74-nmd"/>
                         <outlet property="selectMidiButton" destination="UwB-pc-SKf" id="3wF-aZ-glP"/>
                         <outlet property="selectPresetButton" destination="dte-tI-4BA" id="cSS-Nc-Q2O"/>
+                        <outlet property="selectWavButton" destination="0EV-x4-YvC" id="Sa0-Ov-3YC"/>
                         <outlet property="stopButton" destination="9dT-Av-28u" id="mlQ-HF-IDs"/>
+                        <outlet property="wavField" destination="lkM-KX-JDD" id="SNc-c8-xdc"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

@@ -19,7 +19,9 @@ class ViewController: NSViewController {
     var currentEffect:AVAudioUnitEffect?
     var currentMidiURL:URL?
     var currentPresetURL:URL?
+    var currentWavURL:URL?
     private var midiFilePlayer:MidiFilePlayer?
+    private var audioFilePlayer:AudioFilePlayer?
     //private var testWindowController: NSWindowController?
 
     //MARK: Outlets
@@ -31,8 +33,11 @@ class ViewController: NSViewController {
     @IBOutlet weak var presetField: NSTextField!
     @IBOutlet weak var selectPresetButton: NSButton!
     @IBOutlet weak var midiField: NSTextField!
+    @IBOutlet weak var wavField: NSTextField!
     @IBOutlet weak var selectMidiButton: NSButton!
+    @IBOutlet weak var selectWavButton: NSButton!
     @IBOutlet weak var playMidiButton: NSButton!
+    @IBOutlet weak var playWavButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
     @IBOutlet weak var renderButton: NSButton!
     @IBOutlet weak var controllerField: NSTextField!
@@ -44,6 +49,7 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         //print("viewDidLoad")
         midiFilePlayer = MidiFilePlayer()
+        audioFilePlayer = AudioFilePlayer()
         
         // Do any additional setup after loading the view.
         pluginPopup.addItem(withTitle: "Select instrument...")
@@ -129,6 +135,12 @@ class ViewController: NSViewController {
         renderButton.isEnabled = true
     }
     
+    func _selectWav(_ wavURL:URL) {
+        currentWavURL = wavURL
+        wavField.stringValue = wavURL.path
+        playWavButton.isEnabled = true
+    }
+    
     func _selectPreset(_ presetFile:URL) -> Bool {
         guard let instrument = currentInstrument else {
             print("No instrument selected! Should not be here")
@@ -196,6 +208,15 @@ class ViewController: NSViewController {
         midiFilePlayer.play()
     }
     
+    @IBAction func playWav(_ sender:NSButton) {
+        guard let audioFilePlayer = audioFilePlayer else {
+            print("No audio player!")
+            return
+        }
+        audioFilePlayer.wavURL = currentWavURL
+        audioFilePlayer.play()
+    }
+    
     @IBAction func selectMidi(_ sender:NSButton) {
         let dialog = NSOpenPanel()
         
@@ -213,6 +234,23 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func selectWav(_ sender:NSButton) {
+        let dialog = NSOpenPanel()
+        
+        dialog.title = "Select a wav file"
+        dialog.allowedFileTypes = ["wav"]
+        
+        if dialog.runModal() == NSApplication.ModalResponse.OK {
+            guard let result = dialog.url else {
+                print("Something went wrong")
+                return
+            }
+            _selectWav(result)
+        } else {
+            print("User cancelled")
+        }
+    }
+
     @IBAction func selectPreset(_ sender:NSButton) {
         
         if currentInstrument == nil {
