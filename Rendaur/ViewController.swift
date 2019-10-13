@@ -39,6 +39,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var playMidiButton: NSButton!
     @IBOutlet weak var playWavButton: NSButton!
     @IBOutlet weak var stopButton: NSButton!
+    @IBOutlet weak var stopWavButton: NSButton!
     @IBOutlet weak var renderButton: NSButton!
     @IBOutlet weak var controllerField: NSTextField!
     @IBOutlet weak var contollerKnob: NSSliderCell!
@@ -99,7 +100,12 @@ class ViewController: NSViewController {
         currentPresetURL = nil
         presetField.stringValue = ""
         
+        guard let audioFilePlayer = audioFilePlayer else {
+            print("No audio file player!! Something serious happened")
+            return false
+        }
         effectPopup.selectItem(withTitle: effectName)
+        audioFilePlayer.effect = effect
         openEffectButton.isEnabled = true
         //savePresetButton.isEnabled = true
         //selectPresetButton.isEnabled = true
@@ -332,6 +338,14 @@ class ViewController: NSViewController {
             return
         }
         midiFilePlayer.stop()
+    }
+    
+    @IBAction func stopWav(_ sender:NSButton) {
+        guard let audioFilePlayer = audioFilePlayer else {
+            print("No audio player!")
+            return
+        }
+        audioFilePlayer.stop()
     }
     
     @IBAction func openPluginWindow(_ sender: NSButton) {

@@ -1054,6 +1054,17 @@
                                                         <action selector="selectWav:" target="XfG-lQ-9wD" id="r36-aH-aZ4"/>
                                                     </connections>
                                                 </button>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EtJ-ok-lTc">
+                                                    <rect key="frame" x="150" y="116" width="69" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eji-fT-83Z">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="stopWav:" target="XfG-lQ-9wD" id="sZd-39-RCB"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="0xg-wD-sDy" firstAttribute="top" secondItem="lkM-KX-JDD" secondAttribute="bottom" constant="20" id="5I2-w4-HFe"/>
@@ -1095,6 +1106,7 @@
                         <outlet property="selectPresetButton" destination="dte-tI-4BA" id="cSS-Nc-Q2O"/>
                         <outlet property="selectWavButton" destination="0EV-x4-YvC" id="Sa0-Ov-3YC"/>
                         <outlet property="stopButton" destination="9dT-Av-28u" id="mlQ-HF-IDs"/>
+                        <outlet property="stopWavButton" destination="EtJ-ok-lTc" id="wJ1-Cs-2Kt"/>
                         <outlet property="wavField" destination="lkM-KX-JDD" id="SNc-c8-xdc"/>
                     </connections>
                 </viewController>
