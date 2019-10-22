@@ -41,6 +41,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var stopButton: NSButton!
     @IBOutlet weak var stopWavButton: NSButton!
     @IBOutlet weak var renderButton: NSButton!
+    @IBOutlet weak var renderWavButton: NSButton!
     @IBOutlet weak var controllerField: NSTextField!
     @IBOutlet weak var contollerKnob: NSSliderCell!
     
@@ -132,7 +133,28 @@ class ViewController: NSViewController {
         
         return success
     }
-    
+
+    func _renderWav(_ outputURL:URL,_ offset:UInt32=0) -> Bool {
+        guard let audioFilePlayer = audioFilePlayer else {
+            print("No audio file player!")
+            return false
+        }
+        guard currentEffect != nil else {
+            print("No effect selected")
+            return false
+        }
+        audioFilePlayer.wavURL = currentWavURL
+        //midiFilePlayer.wavFile  = "/Users/gislim/Documents/Verkefni/Code/raunder/out.wav"
+        //Rendering twice to get rid of startup problems in some instruments
+        //if !midiFilePlayer.render(outputURL,offset,false) {
+        //    print("Rendering preflight failed")
+        //}
+        
+        let success = audioFilePlayer.render(outputURL,offset)
+        
+        return success
+    }
+
     func _selectMidi(_ midiURL:URL) {
         currentMidiURL = midiURL
         midiField.stringValue = midiURL.path
@@ -332,6 +354,34 @@ class ViewController: NSViewController {
         */
     }
     
+    @IBAction func renderWav(_ sender:NSButton) {
+        /*
+        if currentEffect == nil {
+            print("No instrument selected! Button should be disabled")
+            return
+        }
+        */
+        if currentWavURL == nil {
+            print("No wav file selected! Button should be disabled")
+            return
+        }
+        
+        let savePanel = NSSavePanel()
+        savePanel.showsTagField = false
+        savePanel.nameFieldStringValue = "out.wav"
+        
+        savePanel.begin { (result) in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                print("Get the effect wav URL")
+                guard let outputURL = savePanel.url else {
+                    print("Didn't get any url")
+                    return
+                }
+                let _ = self._renderWav(outputURL)
+            }
+        }
+    }
+
     @IBAction func stop(_ sender:NSButton) {
         guard let midiFilePlayer = midiFilePlayer else {
             print("No midi player!")

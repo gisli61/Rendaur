@@ -1065,6 +1065,17 @@
                                                         <action selector="stopWav:" target="XfG-lQ-9wD" id="sZd-39-RCB"/>
                                                     </connections>
                                                 </button>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mqg-bx-Clm">
+                                                    <rect key="frame" x="218" y="116" width="84" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="push" title="Render" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QlI-hQ-Kh8">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="renderWav:" target="XfG-lQ-9wD" id="5WF-0g-yTl"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="0xg-wD-sDy" firstAttribute="top" secondItem="lkM-KX-JDD" secondAttribute="bottom" constant="20" id="5I2-w4-HFe"/>
@@ -1101,6 +1112,7 @@
                         <outlet property="pluginPopup" destination="WmR-iB-6Ee" id="FQL-Xf-Ktw"/>
                         <outlet property="presetField" destination="4WG-Ae-nWK" id="69b-iN-1ta"/>
                         <outlet property="renderButton" destination="cCn-0X-CV0" id="zZr-Qj-5OM"/>
+                        <outlet property="renderWavButton" destination="Mqg-bx-Clm" id="xWY-OT-Xyz"/>
                         <outlet property="savePresetButton" destination="xNW-46-rAy" id="7wQ-74-nmd"/>
                         <outlet property="selectMidiButton" destination="UwB-pc-SKf" id="3wF-aZ-glP"/>
                         <outlet property="selectPresetButton" destination="dte-tI-4BA" id="cSS-Nc-Q2O"/>
