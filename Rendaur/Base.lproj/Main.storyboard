@@ -1265,7 +1265,6 @@
                         <outlet property="midiField" destination="h85-SD-u3l" id="pn3-Of-um4"/>
                         <outlet property="openEffectButton" destination="c6O-4d-nRx" id="Pri-q6-ZK5"/>
                         <outlet property="openPluginButton" destination="kiD-by-HIW" id="cgK-4E-s4I"/>
-                        <outlet property="playAudioButton" destination="0xg-wD-sDy" id="8hh-gt-JSS"/>
                         <outlet property="playMidiButton" destination="DMb-d1-HuP" id="33B-f6-tuj"/>
                         <outlet property="playWavButton" destination="0xg-wD-sDy" id="vkm-mI-zgY"/>
                         <outlet property="pluginPopup" destination="WmR-iB-6Ee" id="FQL-Xf-Ktw"/>
