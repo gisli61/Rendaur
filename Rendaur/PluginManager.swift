@@ -134,6 +134,21 @@ func writePreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile:URL) -
     return true
 }
 
+func writeEffectPreset(_ effect: AVAudioUnitEffect,_ presetFile:URL) -> Bool {
+    guard let currentState = effect.auAudioUnit.fullStateForDocument else {
+        print("instrument has no state defined")
+        return false
+    }
+    do {
+        let data = try PropertyListSerialization.data(fromPropertyList: currentState, format: PropertyListSerialization.PropertyListFormat.xml, options: 0)
+        try data.write(to: presetFile, options: .atomic)
+    } catch (let err){
+        print(err.localizedDescription)
+        return false
+    }
+    return true
+}
+
 
 func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) -> Bool {
     guard let state = readState(presetFile) else {
@@ -163,6 +178,37 @@ func loadPreset(_ midiInstrument: AVAudioUnitMIDIInstrument,_ presetFile: URL) -
     */
     //TODO: make sure manufacturer, type and subtype match
     midiInstrument.auAudioUnit.fullStateForDocument = state
+    return true
+}
+
+func loadEffectPreset(_ effect: AVAudioUnitEffect,_ presetFile: URL) -> Bool {
+    guard let state = readState(presetFile) else {
+        print("###Error: Could not read the state")
+        return false
+    }
+    
+    guard let _ = effect.auAudioUnit.fullStateForDocument else {
+        print("effect has no state defined")
+        return false
+    }
+    
+    /*
+    if let val = oldState["manufacturer"] {
+        guard let ival = val as? Int else {
+            print("could not read manufacturer")
+            return false
+        }
+        print("Manufacturer :\(ival)")
+    }
+    if let val = oldState["type"] {
+        print("Type :\(val)")
+    }
+    if let val = oldState["subtype"] {
+        print("Subtype :\(val)")
+    }
+    */
+    //TODO: make sure manufacturer, type and subtype match
+    effect.auAudioUnit.fullStateForDocument = state
     return true
 }
 

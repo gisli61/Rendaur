@@ -30,8 +30,11 @@ class ViewController: NSViewController {
     @IBOutlet weak var openPluginButton: NSButton!
     @IBOutlet weak var openEffectButton: NSButton!
     @IBOutlet weak var savePresetButton: NSButton!
+    @IBOutlet weak var saveEffectPresetButton: NSButton!
     @IBOutlet weak var presetField: NSTextField!
+    @IBOutlet weak var effectPresetField: NSTextField!
     @IBOutlet weak var selectPresetButton: NSButton!
+    @IBOutlet weak var selectEffectPresetButton: NSButton!
     @IBOutlet weak var midiField: NSTextField!
     @IBOutlet weak var wavField: NSTextField!
     @IBOutlet weak var selectMidiButton: NSButton!
@@ -108,8 +111,8 @@ class ViewController: NSViewController {
         effectPopup.selectItem(withTitle: effectName)
         audioFilePlayer.effect = effect
         openEffectButton.isEnabled = true
-        //savePresetButton.isEnabled = true
-        //selectPresetButton.isEnabled = true
+        saveEffectPresetButton.isEnabled = true
+        selectEffectPresetButton.isEnabled = true
         return true
     }
     
@@ -167,6 +170,8 @@ class ViewController: NSViewController {
         currentWavURL = wavURL
         wavField.stringValue = wavURL.path
         playWavButton.isEnabled = true
+        stopWavButton.isEnabled = true
+        renderWavButton.isEnabled = true
     }
     
     func _selectPreset(_ presetFile:URL) -> Bool {
@@ -184,7 +189,23 @@ class ViewController: NSViewController {
         }
         return true
     }
-    
+
+    func _selectEffectPreset(_ presetFile:URL) -> Bool {
+        guard let effect = currentEffect else {
+            print("No effect selected! Should not be here")
+            return false
+        }
+        let success = loadEffectPreset(effect,presetFile)
+        if success {
+            currentPresetURL = presetFile
+            effectPresetField.stringValue = presetFile.path
+        } else {
+            print("Couldn't load preset")
+            return false
+        }
+        return true
+    }
+
     func _savePreset(_ presetFile:URL) -> Bool {
         guard let instrument = currentInstrument else {
             print("No instrument selected! Cannot save preset")
@@ -193,7 +214,16 @@ class ViewController: NSViewController {
         let success = writePreset(instrument, presetFile)
         return success
     }
-    
+
+    func _saveEffectPreset(_ presetFile:URL) -> Bool {
+        guard let effect = currentEffect else {
+            print("No effect selected! Cannot save preset")
+            return false
+        }
+        let success = writeEffectPreset(effect, presetFile)
+        return success
+    }
+
     func _pluginInfo() -> Bool {
         guard let instrument = currentInstrument else {
             print("No instrument selected! Cannot save preset")
@@ -302,6 +332,28 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func selectEffectPreset(_ sender:NSButton) {
+        if currentEffect == nil {
+            print("No effect selected! Button should be disabled")
+            return
+        }
+
+        let dialog = NSOpenPanel()
+        
+        dialog.title = "Select a preset"
+        dialog.allowedFileTypes = ["plist","preset"]
+        
+        if dialog.runModal() == NSApplication.ModalResponse.OK {
+            guard let result = dialog.url else {
+                print("Something went wrong")
+                return
+            }
+            let _ = _selectEffectPreset(result)
+        } else {
+            print("User cancelled")
+        }
+    }
+    
     @IBAction func savePreset(_ sender:NSButton) {
         let savePanel = NSSavePanel()
         savePanel.showsTagField = false
@@ -315,6 +367,24 @@ class ViewController: NSViewController {
                     return
                 }
                 let _ = self._savePreset(outputURL)
+            }
+        }
+
+    }
+    
+    @IBAction func saveEffectPreset(_ sender:NSButton) {
+        let savePanel = NSSavePanel()
+        savePanel.showsTagField = false
+        savePanel.nameFieldStringValue = "out.plist"
+        
+        savePanel.begin { (result) in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                print("Get the URL")
+                guard let outputURL = savePanel.url else {
+                    print("Didn't get any url")
+                    return
+                }
+                let _ = self._saveEffectPreset(outputURL)
             }
         }
 
