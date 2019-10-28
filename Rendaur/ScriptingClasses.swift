@@ -40,6 +40,21 @@ class ListScriptCommand: NSScriptCommand {
     }
 }
 
+class ListEffectsScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        var reply = ""
+        
+        var sep = ""
+        for effectName in listEffects() {
+            reply.append(sep)
+            sep = ","
+            reply.append(contentsOf: effectName)
+        }
+        
+        return reply
+    }
+}
+
 class LoadPluginScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
@@ -51,6 +66,21 @@ class LoadPluginScriptCommand: NSScriptCommand {
         
         //FIXME: change isn't reflected in popupButton
         let success = vc._changePlugin(pluginName)
+        return success
+    }
+}
+
+class LoadEffectScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
+        }
+        let effectName = self.directParameter as! String
+        
+        //FIXME: change isn't reflected in popupButton
+        let success = vc._changeEffect(effectName)
         return success
     }
 }
@@ -86,6 +116,37 @@ class LoadPresetScriptCommand: NSScriptCommand {
     }
 }
 
+class LoadEffectPresetScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
+        }
+        
+        if vc.currentEffect == nil {
+            scriptErrorString = "No effect loaded"
+            scriptErrorNumber = 1003
+            return nil
+        }
+        
+        //CHECK: Cannot use ~ in pathname.
+        
+        guard let presetFile = self.directParameter as? URL else {
+            scriptErrorString = "Could not preset path parameter"
+            scriptErrorNumber = 1004
+            return nil
+        }
+        let success = vc._selectEffectPreset(presetFile)
+        if !success {
+            scriptErrorString = "Could not load preset. Has effect been loaded?"
+            scriptErrorNumber = 1005
+            return nil
+        }
+        return nil
+    }
+}
+
 class LoadMidiScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
@@ -103,6 +164,27 @@ class LoadMidiScriptCommand: NSScriptCommand {
         
         //Should double check if file loads properly
         vc._selectMidi(midiFile)
+        return nil
+    }
+}
+
+class LoadWavScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
+        }
+
+        //CHECK: Cannot use ~ in pathname.
+        guard let wavFile = self.directParameter as? URL else {
+            scriptErrorString = "Could not read wav path parameter"
+            scriptErrorNumber = 1006
+            return nil
+        }
+        
+        //Should double check if file loads properly
+        vc._selectWav(wavFile)
         return nil
     }
 }
@@ -147,6 +229,46 @@ class RenderScriptCommand: NSScriptCommand {
     }
 }
 
+class RenderEffectScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
+        }
+        
+        guard let arguments = self.evaluatedArguments else {
+            scriptErrorString = "Unknown error. Got no arguments"
+            scriptErrorNumber = 1007
+            return nil
+        }
+        
+        guard let wavFile = arguments["WavFilePath"] as? URL else {
+            scriptErrorString = "Could not wav file path parameter"
+            scriptErrorNumber = 1008
+            return nil
+        }
+
+        let offset = arguments["Offset"] as? UInt32
+        
+        var success:Bool = false
+        
+        if let offset = offset {
+            //print("Got offset \(offset)")
+            success = vc._renderWav(wavFile, offset)
+        } else {
+            success = vc._renderWav(wavFile)
+        }
+        
+        if !success {
+            scriptErrorString = "Unknown error. Rendering failed"
+            scriptErrorNumber = 1009
+            return nil
+        }
+        return nil
+    }
+}
+
 class InfoScriptCommand: NSScriptCommand {
     override func performDefaultImplementation() -> Any? {
         guard let vc = ViewController.vc else {
@@ -162,6 +284,24 @@ class InfoScriptCommand: NSScriptCommand {
         }
 
         return getPluginInfo(instrument)
+    }
+}
+
+class EffectInfoScriptCommand: NSScriptCommand {
+    override func performDefaultImplementation() -> Any? {
+        guard let vc = ViewController.vc else {
+            scriptErrorString = "Application not ready"
+            scriptErrorNumber = 1001
+            return nil
+        }
+        
+        guard let effect = vc.currentEffect else {
+            scriptErrorString = "No plugin selected. Cannot get info"
+            scriptErrorNumber = 1002
+            return nil
+        }
+
+        return getEffectInfo(effect)
     }
 }
 

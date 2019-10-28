@@ -85,6 +85,25 @@ func getPluginInfo(_ midiInstrument: AVAudioUnitMIDIInstrument) -> String {
     return reply
 }
 
+func getEffectInfo(_ effect: AVAudioUnitEffect) -> String {
+    guard let parameterTree = effect.auAudioUnit.parameterTree else {
+        return "No parameter tree found"
+    }
+    
+    var reply:String=""
+    var sep:String=""
+    for p in parameterTree.allParameters {
+        reply.append(sep)
+        sep="\n"
+        reply.append(p.keyPath)
+        reply.append(":")
+        reply.append(p.displayName)
+        reply.append("=")
+        reply.append(String(p.value))
+    }
+    return reply
+}
+
 func getAudioComponentDescription(name: String) -> AudioComponentDescription? {
     let anyAudioUnitDescription = AudioComponentDescription()
     let units = AVAudioUnitComponentManager.shared().components(matching: anyAudioUnitDescription)
