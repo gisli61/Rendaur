@@ -9,9 +9,19 @@
             <result type="text" description="The result"/>
         </command>
 
+        <command name="list effects" code="RndRLise" description="List effects">
+            <cocoa class="Rendaur.ListEffectsScriptCommand"/>
+            <result type="text" description="The result"/>
+        </command>
+
         <command name="load plugin" code="RndRLoad" description="Load Plugin">
             <cocoa class="Rendaur.LoadPluginScriptCommand"/>
             <direct-parameter type="text" description="The plugin to be loaded"/>
+        </command>
+
+        <command name="load effect" code="RndRLoae" description="Load Effect">
+            <cocoa class="Rendaur.LoadEffectScriptCommand"/>
+            <direct-parameter type="text" description="The effect to be loaded"/>
         </command>
         
         <command name="load preset" code="RndRLdpr" description="Load preset file">
@@ -19,11 +29,21 @@
             <direct-parameter type="file" description="The preset to be loaded"/>
         </command>
 
+        <command name="load effect preset" code="RndRLdpe" description="Load effect preset file">
+            <cocoa class="Rendaur.LoadEffectPresetScriptCommand"/>
+            <direct-parameter type="file" description="The effect preset to be loaded"/>
+        </command>
+
         <command name="load midi" code="RndRLdmd" description="Load midi file">
             <cocoa class="Rendaur.LoadMidiScriptCommand"/>
             <direct-parameter type="file" description="The midi file to be loaded"/>
         </command>
-        
+
+        <command name="load wav" code="RndRLdwv" description="Load wav file">
+            <cocoa class="Rendaur.LoadWavScriptCommand"/>
+            <direct-parameter type="file" description="The wav file to be loaded"/>
+        </command>
+
         <command name="render" code="RndRRndr" description="Render the loaded midi file">
             <cocoa class="Rendaur.RenderScriptCommand"/>
             <parameter name="into" code="Rndr" type="file" description="The wav file to be generated">
@@ -33,13 +53,30 @@
                 <cocoa key="Offset"/>
             </parameter>
         </command>
-        
+
+        <command name="render effect" code="RndRRnde" description="Render the loaded wav file">
+            <cocoa class="Rendaur.RenderEffectScriptCommand"/>
+            <parameter name="into" code="Rndr" type="file" description="The wav file to be generated">
+                <cocoa key="WavFilePath"/>
+            </parameter>
+            <parameter name="with offset" code="Ofst" type="integer" optional="yes" description="The offset to use">
+                <cocoa key="Offset"/>
+            </parameter>
+        </command>
+
         <command name="get info" code="RndRInfo" description="Get info for the current plugin">
             <cocoa class="Rendaur.InfoScriptCommand"/>
             
             <result type="text" description="The full parameter info for the plugin"/>
         </command>
 
+        <command name="get effect info" code="RndRInfe" description="Get info for the current effect">
+            <cocoa class="Rendaur.EffectInfoScriptCommand"/>
+            
+            <result type="text" description="The full parameter info for the effect"/>
+        </command>
+
+        
     </suite>
     
 </dictionary>
