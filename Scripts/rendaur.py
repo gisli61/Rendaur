@@ -9,16 +9,21 @@ __doc__ = """Synopsis:
     A command line interface to the mac application Rendaur.
 
 Usage:
-    rendaur.py -l
+    rendaur.py -l [i|e]
     rendaur.py -I -i <instrument> [-p <preset>]
+    rendaur.py -I -e <effect> [-p <preset>]
     rendaur.py -m <midifile> -i <instrument> -p <preset> -o <wavfile> [-O <latency>]
+    rendaur.py -w <wavfile> -e <effect> -p <preset> -o <wavfile> [-O <latency>]
     rendaur.py [-h]
 
 Options:
     -h print this help and exit
-    -l list the instruments available on the system
+    -l <arg> list the instruments/effects available on the system
+    -I Get info
     -m <arg> The midi file to be rendered
+    -w <arg> The wav file to be rendered
     -i <arg> The instrument to be used
+    -e <arg> The effect to be used
     -p <arg> The preset to be used.
     -o <arg> The output wavfile
     -O <arg> Offset in frames from start to start render.
@@ -98,7 +103,25 @@ def list_instruments():
     for r in res.strip().split(","):
         print r
 
-def info(instrument,presetfile):
+def list_effects():
+    try:
+        res = subprocess.check_output([
+            'osascript',
+            '-e',
+            """tell application "Rendaur"
+                   set a to list effects
+                   quit
+               end tell
+               a
+            """
+        ])
+    except:
+        fail("Rendaur failed")
+
+    for r in res.strip().split(","):
+        print r
+
+def info_instruments(instrument,presetfile):
     if presetfile is None:
         script = """
             tell application "Rendaur"
@@ -121,6 +144,40 @@ def info(instrument,presetfile):
             end tell
             a
             """ % (instrument,presetfile)
+    arguments = [
+        'osascript',
+        '-e',
+        script
+    ]
+    try:
+        res = subprocess.check_output(arguments)
+        print res.strip()
+    except:
+        fail("Rendaur failed")
+
+def info_effects(effect,presetfile):
+    if presetfile is None:
+        script = """
+            tell application "Rendaur"
+            load effect "%s"
+            set a to get effect info
+            quit
+            end tell
+            a
+        """ % effect
+    else:
+        if not os.path.exists(presetfile):
+            fail("File not found: %s" % presetfile)
+        presetfile = os.path.abspath(presetfile)
+        script = """
+            tell application "Rendaur"
+            load effect "%s"
+            load effect preset "%s"
+            set a to get effect info
+            quit
+            end tell
+            a
+            """ % (effect,presetfile)
     arguments = [
         'osascript',
         '-e',
@@ -162,12 +219,42 @@ def render(midifile,instrument,presetfile,wavfile,offset=None):
     except:
         fail("Rendaur failed")
 
+def render_wav(wavinfile,effect,presetfile,wavfile,offset=None):
+    assert_file_exists(wavinfile)
+    assert_file_exists(presetfile)
+    assert_no_file(wavfile)
+
+    wavinfile = os.path.abspath(wavinfile)
+    presetfile = os.path.abspath(presetfile)
+    wavfile = os.path.abspath(wavfile)
+
+    offsetopt = ""
+    if offset is not None:
+        offsetopt = "with offset %s" % offset
+
+    script = """
+        tell application "Rendaur"
+        load effect "%s"
+        load effect preset "%s"
+        load wav "%s"
+        render effect into "%s" %s
+        quit
+        end tell
+    """ % (effect,presetfile,wavinfile,wavfile,offsetopt)
+
+    arguments = ['osascript','-e',script]
+
+    try:
+        res = subprocess.check_output(arguments)
+    except:
+        fail("Rendaur failed")
+
 if __name__ == '__main__':
     if len(sys.argv) == 1 :
         print __doc__
         raise SystemExit
 
-    opt,args = getopt.getopt(sys.argv[1:],'hlIm:i:p:o:O:')
+    opt,args = getopt.getopt(sys.argv[1:],'hl:Im:w:i:e:p:o:O:')
     opt = dict(opt)
 
     if '-h' in opt:
@@ -180,12 +267,20 @@ if __name__ == '__main__':
     if '-l' in opt:
         assert_app_exists()
         assert_not_running()
-        list_instruments()
+        if opt['-l'] == 'i':
+            list_instruments()
+        elif opt['-l'] == 'e':
+            list_effects()
     elif '-I' in opt and '-i' in opt:
         assert_app_exists()
         assert_not_running()
         instrument = opt['-i']
-        info(instrument,opt.get('-p'))
+        info_instruments(instrument,opt.get('-p'))
+    elif '-I' in opt and '-e' in opt:
+        assert_app_exists()
+        assert_not_running()
+        effect = opt['-e']
+        info_effects(effect,opt.get('-p'))
     elif '-m' in opt and '-i' in opt and '-p' in opt and '-o' in opt:
         assert_app_exists()
         assert_not_running()
@@ -194,5 +289,13 @@ if __name__ == '__main__':
         presetfile = opt['-p']
         wavfile    = opt['-o']
         render(midifile,instrument,presetfile,wavfile,offset=opt.get('-O'))
+    elif '-w' in opt and '-e' in opt and '-p' in opt and '-o' in opt:
+        assert_app_exists()
+        assert_not_running()
+        wavinfile  = opt['-w']
+        effect     = opt['-e']
+        presetfile = opt['-p']
+        wavfile    = opt['-o']
+        render_wav(wavinfile,effect,presetfile,wavfile,offset=opt.get('-O'))
     else:
         fail("Wrong arguments. Run with -h to see documentation")
