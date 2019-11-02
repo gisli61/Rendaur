@@ -4,19 +4,19 @@ import sys
 import os
 import getopt
 import json
+import subprocess
+import time
 
 __doc__ = """Synopsis:
     Render a directory of midi files into wav files using preset database
 
 Usage:
-    rendermidi.py [-r <cmd>] [-d] -p <presetsdir> <mididir>
+    rendermidi.py [-d] -p <presetsdir> <mididir>
     rendermidi.py [-h]
 
 Options:
     -h Print this help and exit.
     -p <arg> A path to preset directory. Required
-    -d print debugging info
-    -r Path to rendaur.sh. By default assumed to be on path
 
 Description:
     Create a directory of midi files with names matching some of the plist
@@ -30,13 +30,49 @@ def fail(message):
     print "Error: %s" % message
     raise SystemExit(1)
 
-def main(presetdir,mididir,debug=False,rendaur="rendaur.sh"):
+def assert_file_exists(filename):
+    if not os.path.exists(filename):
+        fail("File not found: %s"%filename)
+
+def assert_no_file(filename):
+    if os.path.exists(filename):
+        fail("File exists: Will not overwrite: %s"%filename)
+
+def render(midifile,instrument,presetfile,wavfile,offset=None):
+    assert_file_exists(midifile)
+    assert_file_exists(presetfile)
+    assert_no_file(wavfile)
+
+    midifile = os.path.abspath(midifile)
+    presetfile = os.path.abspath(presetfile)
+    wavfile = os.path.abspath(wavfile)
+
+    offsetopt = ""
+    if offset is not None:
+        offsetopt = "with offset %s" % offset
+
+    script = """
+        tell application "Rendaur"
+        load plugin "%s"
+        load preset "%s"
+        load midi "%s"
+        render into "%s" %s
+        quit
+        end tell
+    """ % (instrument,presetfile,midifile,wavfile,offsetopt)
+
+    arguments = ['osascript','-e',script]
+
+    try:
+        res = subprocess.check_output(arguments)
+    except:
+        fail("Rendaur failed")
+
+def main(presetdir,mididir):
     if not os.path.exists(mididir):
         fail("Directory does not exist: %s"%mididir)
     if not os.path.isdir(mididir):
         fail("Not a directory: %s"%mididir)
-
-
 
     if not os.path.exists(presetdir):
         fail("Directory does not exist: %s"%presetdir)
@@ -67,26 +103,19 @@ def main(presetdir,mididir,debug=False,rendaur="rendaur.sh"):
         else:
             offset = 0
         if offset == 0: 
-            offset = ""
+            offset = None
         else:
             offset = str(offset)
         print "Rendering %(mid)s.mid into %(mid)s.wav..." % {"mid":m},
-        cmd = '%s "%s" "%s" "%s" "%s" %s' % (rendaur,midifile,plugin,presetfile,wavfile,offset)
-        if not debug:
-            cmd += ' > /dev/null 2> /dev/null'
-        if debug:
-            print
-            print cmd
-        status = os.system(cmd)
-        if status == 0:
-            print "done."
-        else:
-            print "failed."
-
-
+        render(midifile,plugin,presetfile,wavfile,offset=offset)
+        print "done."
+        #Seem to have to sleep for a little bit in order to give Rendaur
+        #change to quit properly. 2 secs work on my machine but it's hard
+        #to tell if that's always enough. Better if we can skip quitting altogether.
+        time.sleep(2)
 
 if __name__ == '__main__':
-    opt,args = getopt.getopt(sys.argv[1:],'hp:dr:')
+    opt,args = getopt.getopt(sys.argv[1:],'hp:')
     opt = dict(opt)
 
     if len(sys.argv) == 1 or '-h' in opt:
@@ -101,4 +130,4 @@ if __name__ == '__main__':
 
     mididir = args[0]
     presetdir = opt['-p']
-    main(presetdir,mididir,debug=('-d' in opt),rendaur=opt.get('-r','rendaur.sh'))
+    main(presetdir,mididir)
