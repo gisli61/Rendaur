@@ -28,15 +28,15 @@ rendering. In addition, the user can correct for latency.
 
 ## Scripts
 
-### rendaur.sh
-A script that runs the Rendaur app from the command line and can render a single midifile using
+### rendaur.py
+A script that runs the Rendaur app from the command line and can render a single source file (midi or wav) using
 a single audio unit with a preset into a 32-bit float wav file. Can also list the audio units that exist on the
-system. The script needs the application to work, but uses osascript to locate the application, so they
+system. The script needs the application to work, but uses osascript to communicate with the application, so they
 need not be in the same location.
 
 ### als2preset.py
 A script that analyses an Ableton project file (.als) and finds presets stored in that file. Can list the
-presets contained in a project file, extract a given preset into a file that can be read by rendaur.sh and dump all
+presets contained in a project file, extract a given preset into a file that can be read by rendaur.py and dump all
 the presets found in an .als file into a folder.
 
 ### readwav.py
@@ -50,5 +50,5 @@ view the output from readwav.py. Requires matplotlib.
 creates a 32-bit 48k wav file from an array of floats read from the standard input. The inverse of readwav.py
 
 ### rendermidi.py
-Batch renders a set of midi files into wav files. Calls rendaur.sh for the actual rendering jobs
+Batch renders a set of midi files into wav files.
  
