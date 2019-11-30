@@ -130,7 +130,8 @@ class MidiFilePlayer {
         //startup problems
         let startPad:AVMusicTimeStamp = 0.0
         let maxLength:TimeInterval = 600.0
-
+        let tailPadInSeconds:TimeInterval = 10.0
+        let tailPadInFrames = UInt32(round(sampleRate*tailPadInSeconds))
         guard let midiInstrument = midiInstrument else {
             print("###Error: no instrument loaded")
             return false
@@ -221,6 +222,7 @@ class MidiFilePlayer {
             print("lengthInSeconds: \(originalLengthInSeconds)")
             //print("paddedLengthInSeconds: \(paddedLengthInSeconds)")
             print("lengthInFrames: \(lengthInFrames)")
+            print("tailPad: \(tailPadInFrames)")
             print("latency: \(latencyInFrames)")
         }
         
@@ -254,7 +256,7 @@ class MidiFilePlayer {
         */
         
         
-        let header=create48k32bitFloatWavHeader(lengthInFrames)
+        let header=create48k32bitFloatWavHeader(lengthInFrames+tailPadInFrames)
         
         let fileManager = FileManager.default
         
@@ -304,10 +306,10 @@ class MidiFilePlayer {
             remainingOffset -= bufLen
         }
         
-        while(audioEngine.manualRenderingSampleTime<lengthInFrames+totalOffset) {
+        while(audioEngine.manualRenderingSampleTime<lengthInFrames+totalOffset+tailPadInFrames) {
             //frameNum += 1
             //print("\(audioEngine.manualRenderingSampleTime)")
-            let framesToRead = UInt32(min(Int64(lengthInFrames+totalOffset)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
+            let framesToRead = UInt32(min(Int64(lengthInFrames+totalOffset+tailPadInFrames)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
             
             do {
                 try audioEngine.renderOffline(AVAudioFrameCount(framesToRead), to: buffer)
