@@ -129,7 +129,7 @@ class MidiFilePlayer {
         //However, by rendering twice, we may not need this to fix
         //startup problems
         let startPad:AVMusicTimeStamp = 0.0
-        let maxLength:TimeInterval = 60.0
+        let maxLength:TimeInterval = 600.0
 
         guard let midiInstrument = midiInstrument else {
             print("###Error: no instrument loaded")
