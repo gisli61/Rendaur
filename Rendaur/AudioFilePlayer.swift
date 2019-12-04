@@ -31,8 +31,18 @@ class AudioFilePlayer {
         didSet {
             if let effect = effect {
                 audioEngine.attach(effect)
-                audioEngine.connect(audioFilePlayer, to:effect, format: nil)
-                audioEngine.connect(effect, to:audioEngine.mainMixerNode, format: nil)
+                /*
+                 For general info on connecting audio units etc see AudioKit
+                 Look at connectEffects in AKAudioUnitManager
+                 and createEffectAudioUnit
+                 Look at connect function in AudioKit/Internals/AudioKit+SafeConnections
+                 Convology is not happy getting nil as format. It throws error -10868 which
+                 according to osstatus.com is kAudioUnitErr_FormatNotSupported
+                 It seems to be ok to feed the input format to the effects, so I do that.
+                 */
+                let format = effect.inputFormat(forBus: 0)
+                audioEngine.connect(audioFilePlayer, to:effect, format: format)
+                audioEngine.connect(effect, to:audioEngine.outputNode, format: format)
             } else {
                 audioEngine.connect(audioFilePlayer, to:audioEngine.mainMixerNode, format: nil)
             }
