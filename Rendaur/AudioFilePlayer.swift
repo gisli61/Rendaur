@@ -131,6 +131,9 @@ class AudioFilePlayer {
         let sampleRate:Double = 48000.0
         let channels:AVAudioChannelCount = 2
         
+        let tailPadInSeconds:TimeInterval = 10.0
+        let tailPadInFrames = UInt32(round(sampleRate*tailPadInSeconds))
+
         guard canPlay else {
             print("Not ready to render: No midi file")
             return false
@@ -175,7 +178,7 @@ class AudioFilePlayer {
         audioFilePlayer.scheduleFile(audioFile, at: nil, completionHandler: nil)
         audioFilePlayer.play()
 
-        let header=create48k32bitFloatWavHeader(lengthInFrames)
+        let header=create48k32bitFloatWavHeader(lengthInFrames+tailPadInFrames)
         
         let fileManager = FileManager.default
         
@@ -214,8 +217,8 @@ class AudioFilePlayer {
             remainingOffset -= bufLen
         }
 
-        while(audioEngine.manualRenderingSampleTime<lengthInFrames+totalOffset) {
-            let framesToRead = UInt32(min(Int64(lengthInFrames+totalOffset)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
+        while(audioEngine.manualRenderingSampleTime<lengthInFrames+totalOffset+tailPadInFrames) {
+            let framesToRead = UInt32(min(Int64(lengthInFrames+totalOffset+tailPadInFrames)-audioEngine.manualRenderingSampleTime,Int64(bufLen)))
             
             do {
                 let status = try audioEngine.renderOffline(AVAudioFrameCount(framesToRead), to: buffer)
