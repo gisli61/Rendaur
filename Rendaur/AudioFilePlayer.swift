@@ -138,7 +138,7 @@ class AudioFilePlayer {
         let sampleRate:Double = 48000.0
         let channels:AVAudioChannelCount = 2
         
-        let tailPadInSeconds:TimeInterval = 10.0
+        let tailPadInSeconds:TimeInterval = 0
         let tailPadInFrames = UInt32(round(sampleRate*tailPadInSeconds))
 
         guard canPlay else {
