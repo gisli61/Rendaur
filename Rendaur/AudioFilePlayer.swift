@@ -39,10 +39,17 @@ class AudioFilePlayer {
                  Convology is not happy getting nil as format. It throws error -10868 which
                  according to osstatus.com is kAudioUnitErr_FormatNotSupported
                  It seems to be ok to feed the input format to the effects, so I do that.
+
+                 Must force the audioFilePlayer format and mainMixerNode formats
+                 upon the effect. Otherwise the effect may get its own ideas about
+                 channel count etc.
                  */
-                let format = effect.inputFormat(forBus: 0)
-                audioEngine.connect(audioFilePlayer, to:effect, format: format)
-                audioEngine.connect(effect, to:audioEngine.outputNode, format: format)
+                let audioFilePlayerFormat = audioFilePlayer.outputFormat(forBus: 0)
+                let mainMixerNodeFormat = audioEngine.mainMixerNode.inputFormat(forBus: 0)
+
+                audioEngine.connect(audioFilePlayer, to:effect, format: audioFilePlayerFormat)
+                audioEngine.connect(effect, to:audioEngine.mainMixerNode, format: mainMixerNodeFormat)
+                
             } else {
                 audioEngine.connect(audioFilePlayer, to:audioEngine.mainMixerNode, format: nil)
             }
