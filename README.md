@@ -3,7 +3,7 @@
 Rendaur is a MacOSX application that can open up an audio unit midi instrument, load a preset for the instrument
 and a midi file and then render the midi file off-line into a 48k 32bit float wav file.
 
-It can run both as a normal mac application and also as from the command line script via the script rendaur.sh in the
+It can run both as a normal mac application and also as from the command line script via the script rendaur.py in the
 Scripts folder.
 
 ## Application
